@@ -1,0 +1,40 @@
+---
+import { getCategoryName } from '../lib/categories';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  category: string;
+  slug: string;
+}
+
+const { title, description, pubDate, category, slug } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString('ja-JP', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article class="group">
+  <a href={`/posts/${slug}/`} class="block">
+    <div class="border border-border rounded-lg p-5 hover:border-navy/30 transition-colors">
+      <div class="flex items-center gap-3 mb-2 text-xs">
+        <span class="bg-navy/10 text-navy px-2 py-0.5 rounded font-medium">
+          {getCategoryName(category)}
+        </span>
+        <time datetime={pubDate.toISOString()} class="text-text-light">
+          {formattedDate}
+        </time>
+      </div>
+      <h3 class="text-lg font-bold text-text group-hover:text-navy transition-colors mb-2">
+        {title}
+      </h3>
+      <p class="text-sm text-text-light line-clamp-2">
+        {description}
+      </p>
+    </div>
+  </a>
+</article>

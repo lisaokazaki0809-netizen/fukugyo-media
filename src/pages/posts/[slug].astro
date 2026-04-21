@@ -1,0 +1,129 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getCategoryName } from '../../lib/categories';
+import { SITE } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formattedDate = post.data.pubDate.toLocaleDateString('ja-JP', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+// 関連記事: 同カテゴリから最大3件
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const relatedPosts = allPosts
+  .filter((p) => p.data.category === post.data.category && p.id !== post.id)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+// 構造化データ
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  ...(post.data.updatedDate && { dateModified: post.data.updatedDate.toISOString() }),
+  author: {
+    '@type': 'Organization',
+    name: SITE.author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.title,
+  },
+  image: new URL(post.data.image, SITE.url).toString(),
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': new URL(`/posts/${post.id}/`, SITE.url).toString(),
+  },
+};
+---
+
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.image}
+  type="article"
+  pubDate={post.data.pubDate}
+  breadcrumbs={[
+    { name: getCategoryName(post.data.category), href: `/category/${post.data.category}/` },
+    { name: post.data.title, href: `/posts/${post.id}/` },
+  ]}
+>
+  <article class="mx-auto max-w-3xl px-4 py-10" data-pagefind-body>
+    <!-- メタ情報 -->
+    <div class="flex items-center gap-3 mb-4 text-sm">
+      <a
+        href={`/category/${post.data.category}/`}
+        class="bg-navy/10 text-navy px-2.5 py-0.5 rounded font-medium hover:bg-navy/20 transition-colors"
+      >
+        {getCategoryName(post.data.category)}
+      </a>
+      <time datetime={post.data.pubDate.toISOString()} class="text-text-light">
+        {formattedDate}
+      </time>
+    </div>
+
+    <!-- タイトル -->
+    <h1 class="text-2xl md:text-3xl font-bold text-text mb-8">
+      {post.data.title}
+    </h1>
+
+    <!-- 本文 -->
+    <div class="prose">
+      <Content />
+    </div>
+
+    <!-- タグ -->
+    {post.data.tags.length > 0 && (
+      <div class="mt-10 pt-6 border-t border-border">
+        <div class="flex flex-wrap gap-2">
+          {post.data.tags.map((tag) => (
+            <a
+              href={`/tag/${tag}/`}
+              class="text-xs border border-border rounded-full px-3 py-1 text-text-light hover:border-navy hover:text-navy transition-colors"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- 関連記事 -->
+    {relatedPosts.length > 0 && (
+      <section class="mt-12 pt-8 border-t border-border">
+        <h2 class="text-lg font-bold text-text mb-4">関連記事</h2>
+        <div class="space-y-3">
+          {relatedPosts.map((rp) => (
+            <a
+              href={`/posts/${rp.id}/`}
+              class="block border border-border rounded-lg p-4 hover:border-navy/30 transition-colors"
+            >
+              <span class="text-xs text-text-light">
+                {getCategoryName(rp.data.category)}
+              </span>
+              <h3 class="font-medium text-text mt-1">{rp.data.title}</h3>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+
+  <!-- 構造化データ -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</Base>

@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="記事を検索" description="副業の教科書の記事を検索します。">
+  <section class="mx-auto max-w-3xl px-4 py-10">
+    <h1 class="text-2xl font-bold text-text mb-8">記事を検索</h1>
+    <div id="search" class="pagefind-ui"></div>
+  </section>
+</Base>
+
+<style is:global>
+  /* Pagefind UIのカスタマイズ */
+  :root {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: #1E3A5F;
+    --pagefind-ui-text: #1F2937;
+    --pagefind-ui-background: #FFFFFF;
+    --pagefind-ui-border: #E5E7EB;
+    --pagefind-ui-tag: #F3F4F6;
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 0.5rem;
+    --pagefind-ui-font: 'Noto Sans JP', sans-serif;
+  }
+</style>
+
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', function() {
+    var script = document.createElement('script');
+    script.src = '/pagefind/pagefind-ui.js';
+    script.onload = function() {
+      new PagefindUI({
+        element: '#search',
+        showSubResults: true,
+        showImages: false,
+      });
+    };
+    script.onerror = function() {
+      var el = document.getElementById('search');
+      if (el) {
+        el.innerHTML = '<p style="color:#6B7280">検索機能はビルド後に利用できます。npm run build を実行してください。</p>';
+      }
+    };
+    document.head.appendChild(script);
+
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+  });
+</script>

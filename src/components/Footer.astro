@@ -1,0 +1,17 @@
+---
+import { SITE } from '../lib/site';
+---
+
+<footer class="border-t border-border bg-bg-gray mt-16">
+  <div class="mx-auto max-w-5xl px-4 py-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-text-light">
+      <p>&copy; {new Date().getFullYear()} {SITE.title}</p>
+      <nav class="flex gap-4">
+        <a href="/about/" class="hover:text-navy transition-colors">このサイトについて</a>
+        <a href="/rss.xml" class="hover:text-navy transition-colors">RSS</a>
+      </nav>
+    </div>
+    <!-- 広告枠（後で追加） -->
+    <!-- <div class="mt-8 text-center">広告エリア</div> -->
+  </div>
+</footer>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fukugyo-media.vercel.app/sitemap-index.xml

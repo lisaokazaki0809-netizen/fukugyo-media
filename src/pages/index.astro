@@ -1,17 +1,60 @@
 ---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { categories } from '../lib/categories';
+import { SITE } from '../lib/site';
 
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base>
+  <!-- Hero -->
+  <section class="bg-bg-gray border-b border-border">
+    <div class="mx-auto max-w-5xl px-4 py-12 md:py-16">
+      <h1 class="text-2xl md:text-3xl font-bold text-text mb-3">
+        {SITE.title}
+      </h1>
+      <p class="text-text-light text-sm md:text-base max-w-xl">
+        {SITE.description}
+      </p>
+    </div>
+  </section>
+
+  <!-- カテゴリ導線 -->
+  <section class="mx-auto max-w-5xl px-4 py-8">
+    <div class="flex flex-wrap gap-2">
+      {Object.entries(categories).map(([slug, cat]) => (
+        <a
+          href={`/category/${slug}/`}
+          class="border border-border rounded-full px-4 py-1.5 text-sm text-text-light hover:border-navy hover:text-navy transition-colors"
+        >
+          {cat.name}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 最新の記録 -->
+  <section class="mx-auto max-w-5xl px-4 pb-16">
+    <h2 class="text-lg font-bold text-text mb-6">最新の記録</h2>
+    {sortedPosts.length === 0 ? (
+      <p class="text-text-light">まだ記事がありません。</p>
+    ) : (
+      <div class="grid gap-4 md:grid-cols-2">
+        {sortedPosts.map((post) => (
+          <ArticleCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            category={post.data.category}
+            slug={post.id}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</Base>
