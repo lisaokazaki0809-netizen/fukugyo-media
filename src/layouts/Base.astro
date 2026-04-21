@@ -107,13 +107,16 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
   <body>
     <Header />
     {breadcrumbs.length > 0 && (
-      <nav aria-label="パンくずリスト" class="mx-auto max-w-5xl px-4 pt-4">
-        <ol class="flex flex-wrap items-center gap-1 text-xs text-text-light">
-          <li><a href="/" class="hover:text-navy transition-colors">ホーム</a></li>
-          {breadcrumbs.map((b) => (
-            <li class="flex items-center gap-1">
-              <span aria-hidden="true">/</span>
-              <a href={b.href} class="hover:text-navy transition-colors">{b.name}</a>
+      <nav aria-label="パンくずリスト" class="mx-auto max-w-3xl px-4 pt-4">
+        <ol class="flex flex-wrap items-center gap-1.5 text-[12px] text-text-muted">
+          <li><a href="/" class="hover:text-accent transition-colors">ホーム</a></li>
+          {breadcrumbs.map((b, i) => (
+            <li class="flex items-center gap-1.5">
+              <span aria-hidden="true" class="text-border">/</span>
+              {i === breadcrumbs.length - 1
+                ? <span class="truncate max-w-[200px]">{b.name}</span>
+                : <a href={b.href} class="hover:text-accent transition-colors">{b.name}</a>
+              }
             </li>
           ))}
         </ol>

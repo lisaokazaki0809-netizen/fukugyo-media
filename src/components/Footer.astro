@@ -3,32 +3,32 @@ import { SITE } from '../lib/site';
 import { categories } from '../lib/categories';
 ---
 
-<footer class="bg-primary text-white/60 mt-20">
+<footer class="bg-white border-t border-border mt-16">
   <div class="mx-auto max-w-6xl px-4 py-10">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
       <div>
-        <p class="text-white font-bold text-lg mb-2">{SITE.title}</p>
-        <p class="text-sm leading-relaxed">{SITE.description}</p>
+        <p class="font-bold text-text mb-2">{SITE.title}</p>
+        <p class="text-sm text-text-secondary leading-relaxed">{SITE.description}</p>
       </div>
       <div>
-        <p class="text-white font-medium text-sm mb-3">カテゴリ</p>
-        <ul class="space-y-1.5 text-sm">
+        <p class="font-medium text-text text-sm mb-3">カテゴリ</p>
+        <ul class="space-y-2 text-sm text-text-secondary">
           {Object.entries(categories).map(([slug, cat]) => (
-            <li><a href={`/category/${slug}/`} class="hover:text-white transition-colors">{cat.name}</a></li>
+            <li><a href={`/category/${slug}/`} class="hover:text-accent transition-colors">{cat.name}</a></li>
           ))}
         </ul>
       </div>
       <div>
-        <p class="text-white font-medium text-sm mb-3">リンク</p>
-        <ul class="space-y-1.5 text-sm">
-          <li><a href="/about/" class="hover:text-white transition-colors">このサイトについて</a></li>
-          <li><a href="/search/" class="hover:text-white transition-colors">記事を検索</a></li>
-          <li><a href="/rss.xml" class="hover:text-white transition-colors">RSS フィード</a></li>
+        <p class="font-medium text-text text-sm mb-3">リンク</p>
+        <ul class="space-y-2 text-sm text-text-secondary">
+          <li><a href="/about/" class="hover:text-accent transition-colors">このサイトについて</a></li>
+          <li><a href="/search/" class="hover:text-accent transition-colors">記事を検索</a></li>
+          <li><a href="/rss.xml" class="hover:text-accent transition-colors">RSS</a></li>
         </ul>
       </div>
     </div>
-    <div class="border-t border-white/10 pt-6 text-center text-xs">
-      <p>&copy; {new Date().getFullYear()} {SITE.title} All rights reserved.</p>
+    <div class="border-t border-border pt-6 text-center text-xs text-text-muted">
+      &copy; {new Date().getFullYear()} {SITE.title}
     </div>
   </div>
 </footer>
