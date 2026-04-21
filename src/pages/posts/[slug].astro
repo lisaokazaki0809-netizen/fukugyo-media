@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { getCategoryName, getCategoryColor, getCategoryBgColor } from '../../lib/categories';
+import { getCategoryName, getCategoryColor, getCategoryBgColor, getCategoryImage } from '../../lib/categories';
 import { SITE } from '../../lib/site';
 
 export async function getStaticPaths() {
@@ -23,6 +23,7 @@ const formattedDate = post.data.pubDate.toLocaleDateString('ja-JP', {
 
 const catColor = getCategoryColor(post.data.category);
 const catBgColor = getCategoryBgColor(post.data.category);
+const catImage = getCategoryImage(post.data.category);
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
 const relatedPosts = allPosts
@@ -55,7 +56,14 @@ const articleSchema = {
     { name: post.data.title, href: `/posts/${post.id}/` },
   ]}
 >
-  <article class="mx-auto max-w-3xl px-4 py-8 md:py-12" data-pagefind-body>
+  <!-- Hero image -->
+  <div class="mx-auto max-w-3xl px-4 pt-6">
+    <div class="rounded-xl overflow-hidden aspect-[16/6]">
+      <img src={catImage} alt="" class="w-full h-full object-cover" width="768" height="288" />
+    </div>
+  </div>
+
+  <article class="mx-auto max-w-3xl px-4 py-6 md:py-8" data-pagefind-body>
     <!-- Meta -->
     <div class="flex items-center gap-2.5 mb-5">
       <a

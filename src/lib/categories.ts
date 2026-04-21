@@ -4,30 +4,35 @@ export const categories = {
     description: '株式・投資信託・仮想通貨など、資産を増やす副業の選び方',
     color: '#2563EB',
     bgColor: '#EFF6FF',
+    image: '/images/categories/investment.svg',
   },
   ai: {
     name: 'AI副業',
     description: 'AIツールを活用した副業の始め方と稼ぎ方',
     color: '#7C3AED',
     bgColor: '#F5F3FF',
+    image: '/images/categories/ai.svg',
   },
   entrepreneur: {
     name: '起業',
     description: 'スモールビジネスや個人事業の立ち上げガイド',
     color: '#059669',
     bgColor: '#ECFDF5',
+    image: '/images/categories/entrepreneur.svg',
   },
   jobchange: {
     name: '転職',
     description: '転職活動の進め方、エージェント比較、面接対策など',
     color: '#DC2626',
     bgColor: '#FEF2F2',
+    image: '/images/categories/jobchange.svg',
   },
   career: {
     name: 'キャリアアップ',
     description: '資格取得、スキルアップ、昇進・昇給を目指す戦略',
     color: '#D97706',
     bgColor: '#FFFBEB',
+    image: '/images/categories/career.svg',
   },
 } as const;
 
@@ -47,4 +52,8 @@ export function getCategoryColor(slug: string): string {
 
 export function getCategoryBgColor(slug: string): string {
   return categories[slug as CategorySlug]?.bgColor ?? '#F9FAFB';
+}
+
+export function getCategoryImage(slug: string): string {
+  return categories[slug as CategorySlug]?.image ?? '/images/categories/investment.svg';
 }

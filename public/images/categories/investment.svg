@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#EFF6FF"/>
+      <stop offset="100%" style="stop-color:#DBEAFE"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#bg)"/>
+  <!-- Chart bars -->
+  <rect x="180" y="220" width="50" height="100" rx="6" fill="#2563EB" opacity="0.2"/>
+  <rect x="250" y="180" width="50" height="140" rx="6" fill="#2563EB" opacity="0.35"/>
+  <rect x="320" y="150" width="50" height="170" rx="6" fill="#2563EB" opacity="0.5"/>
+  <rect x="390" y="120" width="50" height="200" rx="6" fill="#2563EB" opacity="0.65"/>
+  <rect x="460" y="90" width="50" height="230" rx="6" fill="#2563EB" opacity="0.8"/>
+  <rect x="530" y="60" width="50" height="260" rx="6" fill="#2563EB"/>
+  <!-- Trend line -->
+  <path d="M205 210 L275 170 L345 145 L415 110 L485 80 L555 50" stroke="#1D4ED8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Circles on line -->
+  <circle cx="205" cy="210" r="5" fill="#1D4ED8"/>
+  <circle cx="275" cy="170" r="5" fill="#1D4ED8"/>
+  <circle cx="345" cy="145" r="5" fill="#1D4ED8"/>
+  <circle cx="415" cy="110" r="5" fill="#1D4ED8"/>
+  <circle cx="485" cy="80" r="5" fill="#1D4ED8"/>
+  <circle cx="555" cy="50" r="6" fill="#fff" stroke="#1D4ED8" stroke-width="3"/>
+  <!-- Coin -->
+  <circle cx="660" cy="160" r="45" fill="#2563EB" opacity="0.15"/>
+  <circle cx="660" cy="160" r="32" fill="#2563EB" opacity="0.25"/>
+  <text x="660" y="170" text-anchor="middle" font-size="28" font-weight="bold" fill="#2563EB" font-family="system-ui">&#165;</text>
+  <!-- Base line -->
+  <line x1="160" y1="320" x2="600" y2="320" stroke="#2563EB" stroke-width="2" opacity="0.2"/>
+</svg>

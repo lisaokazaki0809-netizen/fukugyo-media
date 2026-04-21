@@ -20,14 +20,32 @@ const sortedPosts = posts.sort(
 ---
 
 <Base title={`${category.name}の記事一覧`} description={category.description} breadcrumbs={[{ name: category.name, href: `/category/${slug}/` }]}>
-  <section class="mx-auto max-w-5xl px-4 py-10">
-    <h1 class="text-2xl font-bold text-text mb-2">{category.name}</h1>
-    <p class="text-text-light text-sm mb-8">{category.description}</p>
+  <!-- Category hero -->
+  <section class="bg-white border-b border-border">
+    <div class="mx-auto max-w-6xl px-4 py-8">
+      <div class="flex flex-col md:flex-row md:items-center gap-6">
+        <div class="flex-1">
+          <span
+            class="inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded mb-3"
+            style={`color: ${category.color}; background-color: ${category.bgColor}`}
+          >
+            Category
+          </span>
+          <h1 class="text-2xl font-bold text-text mb-2">{category.name}</h1>
+          <p class="text-text-secondary text-sm">{category.description}</p>
+        </div>
+        <div class="w-full md:w-56 h-32 rounded-xl overflow-hidden shrink-0">
+          <img src={category.image} alt="" class="w-full h-full object-cover" width="224" height="128" />
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section class="mx-auto max-w-6xl px-4 py-8">
     {sortedPosts.length === 0 ? (
-      <p class="text-text-light">この カテゴリにはまだ記事がありません。</p>
+      <p class="text-text-secondary">このカテゴリにはまだ記事がありません。</p>
     ) : (
-      <div class="grid gap-4 md:grid-cols-2">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {sortedPosts.map((post) => (
           <ArticleCard
             title={post.data.title}

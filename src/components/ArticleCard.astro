@@ -1,5 +1,5 @@
 ---
-import { getCategoryName, getCategoryColor, getCategoryBgColor } from '../lib/categories';
+import { getCategoryName, getCategoryColor, getCategoryBgColor, getCategoryImage } from '../lib/categories';
 
 interface Props {
   title: string;
@@ -13,6 +13,7 @@ interface Props {
 const { title, description, pubDate, category, slug, featured = false } = Astro.props;
 const catColor = getCategoryColor(category);
 const catBgColor = getCategoryBgColor(category);
+const catImage = getCategoryImage(category);
 
 const formattedDate = pubDate.toLocaleDateString('ja-JP', {
   year: 'numeric',
@@ -24,8 +25,19 @@ const formattedDate = pubDate.toLocaleDateString('ja-JP', {
 <article class="group h-full">
   <a href={`/posts/${slug}/`} class="block h-full">
     <div class={`h-full bg-white rounded-xl overflow-hidden transition-all duration-200 ${featured ? 'shadow-sm hover:shadow-md' : 'hover:shadow-sm'} border border-transparent hover:border-border`}>
-      <div class="p-5">
-        <div class="flex items-center gap-2 mb-3">
+      <!-- Thumbnail -->
+      <div class="aspect-[16/8] overflow-hidden">
+        <img
+          src={catImage}
+          alt=""
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+          width="400"
+          height="200"
+        />
+      </div>
+      <div class="p-4">
+        <div class="flex items-center gap-2 mb-2.5">
           <span
             class="text-[11px] font-bold uppercase tracking-wide px-2 py-0.5 rounded"
             style={`color: ${catColor}; background-color: ${catBgColor}`}
@@ -36,7 +48,7 @@ const formattedDate = pubDate.toLocaleDateString('ja-JP', {
             {formattedDate}
           </time>
         </div>
-        <h3 class={`font-bold text-text leading-snug group-hover:text-accent transition-colors mb-2 ${featured ? 'text-lg' : 'text-[15px]'}`}>
+        <h3 class={`font-bold text-text leading-snug group-hover:text-accent transition-colors mb-1.5 ${featured ? 'text-[16px]' : 'text-[15px]'}`}>
           {title}
         </h3>
         <p class="text-[13px] text-text-secondary line-clamp-2 leading-relaxed">
