@@ -1,5 +1,5 @@
 ---
-import { getCategoryName } from '../lib/categories';
+import { getCategoryName, getCategoryColor, getCategoryBgColor } from '../lib/categories';
 
 interface Props {
   title: string;
@@ -10,6 +10,8 @@ interface Props {
 }
 
 const { title, description, pubDate, category, slug } = Astro.props;
+const catColor = getCategoryColor(category);
+const catBgColor = getCategoryBgColor(category);
 
 const formattedDate = pubDate.toLocaleDateString('ja-JP', {
   year: 'numeric',
@@ -18,23 +20,30 @@ const formattedDate = pubDate.toLocaleDateString('ja-JP', {
 });
 ---
 
-<article class="group">
-  <a href={`/posts/${slug}/`} class="block">
-    <div class="border border-border rounded-lg p-5 hover:border-navy/30 transition-colors">
-      <div class="flex items-center gap-3 mb-2 text-xs">
-        <span class="bg-navy/10 text-navy px-2 py-0.5 rounded font-medium">
-          {getCategoryName(category)}
-        </span>
-        <time datetime={pubDate.toISOString()} class="text-text-light">
-          {formattedDate}
-        </time>
+<article class="group h-full">
+  <a href={`/posts/${slug}/`} class="block h-full">
+    <div class="h-full bg-white border border-border rounded-xl overflow-hidden hover:shadow-lg hover:border-border/50 transition-all duration-200">
+      <!-- Category color bar -->
+      <div class="h-1.5" style={`background-color: ${catColor}`}></div>
+      <div class="p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <span
+            class="text-xs font-semibold px-2.5 py-1 rounded-md"
+            style={`color: ${catColor}; background-color: ${catBgColor}`}
+          >
+            {getCategoryName(category)}
+          </span>
+          <time datetime={pubDate.toISOString()} class="text-xs text-text-muted">
+            {formattedDate}
+          </time>
+        </div>
+        <h3 class="text-base font-bold text-text leading-snug group-hover:text-accent transition-colors mb-2">
+          {title}
+        </h3>
+        <p class="text-sm text-text-light line-clamp-2 leading-relaxed">
+          {description}
+        </p>
       </div>
-      <h3 class="text-lg font-bold text-text group-hover:text-navy transition-colors mb-2">
-        {title}
-      </h3>
-      <p class="text-sm text-text-light line-clamp-2">
-        {description}
-      </p>
     </div>
   </a>
 </article>

@@ -39,8 +39,8 @@ src/
 | investment | 投資 |
 | ai | AI副業 |
 | entrepreneur | 起業 |
-| fortune | 占い |
-| relationship | 恋愛 |
+| jobchange | 転職 |
+| career | キャリアアップ |
 
 ## 記事テンプレート
 ```markdown
@@ -71,6 +71,13 @@ image: "/images/og-default.png"
 
 ## デザインルール
 - フォント: Noto Sans JP
-- 配色: 白背景 (#FFFFFF) / テキスト (#1F2937) / アクセント (#1E3A5F)
-- 記事本文: font-size 16px, line-height 1.7
+- 配色: ダークネイビーヘッダー (#1a1a2e) / 白背景 / カテゴリごとのアクセントカラー
+- 記事本文: font-size 16px, line-height 1.8
 - ダークモードなし
+- 記事は表やリストを多用して見やすく
+
+## 記事執筆ルール
+- 「やってみた」ではなく「調べた・比較した」トーンで書く
+- 表（テーブル）やリストを積極的に使って見やすくする
+- 文字化けを防ぐため、特殊文字やダッシュは使わず日本語で書く
+- 法律の解説や法的アドバイスには触れない
