@@ -26,11 +26,11 @@ const formattedDate = pubDate.toLocaleDateString('ja-JP', {
 <article class="group">
   <a href={`/posts/${slug}/`} class="block">
     <div class="bg-white rounded-xl overflow-hidden transition-all duration-200 hover:shadow-md border border-transparent hover:border-border">
-      <div class="overflow-hidden bg-bg-muted">
+      <div class="aspect-[16/6] overflow-hidden bg-bg-muted">
         <img
           src={catImage}
           alt=""
-          class="w-full h-auto block group-hover:scale-105 transition-transform duration-300"
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
         />
       </div>
