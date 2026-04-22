@@ -27,14 +27,14 @@ const formattedDate = pubDate.toLocaleDateString('ja-JP', {
   <a href={`/posts/${slug}/`} class="block h-full">
     <div class={`h-full bg-white rounded-xl overflow-hidden transition-all duration-200 ${featured ? 'shadow-sm hover:shadow-md' : 'hover:shadow-sm'} border border-transparent hover:border-border`}>
       <!-- Thumbnail -->
-      <div class="aspect-[16/8] overflow-hidden">
+      <div class="aspect-[334/240] overflow-hidden bg-bg-muted">
         <img
           src={catImage}
           alt=""
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
-          width="400"
-          height="200"
+          width="334"
+          height="240"
         />
       </div>
       <div class="p-4">
