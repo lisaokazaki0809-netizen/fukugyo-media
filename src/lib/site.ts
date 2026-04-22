@@ -1,5 +1,5 @@
 export const SITE = {
-  title: 'fukugyou media',
+  title: '副業media',
   description: '30代会社員が気になる副業と投資を調べて、比較して、考えた記録。盛らずに書きます。',
   url: 'https://fukugyo-media.vercel.app',
   author: '管理人',
