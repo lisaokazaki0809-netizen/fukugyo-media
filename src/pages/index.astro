@@ -112,27 +112,27 @@ const restPosts = sortedPosts.slice(3);
 // 画像の元サイズに対するピクセル座標でリンクを定義
 // 元画像: 1536 x 1024
 var LINKS = [
-  // ヘッダーナビ（左から順番に）
-  { x: 15, y: 18, w: 180, h: 55, href: '/', label: 'トップ' },
-  { x: 730, y: 18, w: 100, h: 55, href: '/category/investment/', label: '投資' },
-  { x: 845, y: 18, w: 115, h: 55, href: '/category/ai/', label: 'AI副業' },
-  { x: 975, y: 18, w: 85, h: 55, href: '/category/entrepreneur/', label: '起業' },
-  { x: 1075, y: 18, w: 85, h: 55, href: '/category/jobchange/', label: '転職' },
-  { x: 1170, y: 18, w: 165, h: 55, href: '/category/career/', label: 'キャリアアップ' },
-  { x: 1350, y: 18, w: 110, h: 55, href: '/about/', label: 'About' },
+  // ヘッダーナビ
+  { x: 32, y: 18, w: 180, h: 55, href: '/', label: 'トップ' },
+  { x: 710, y: 17, w: 100, h: 55, href: '/category/investment/', label: '投資' },
+  { x: 834, y: 18, w: 115, h: 55, href: '/category/ai/', label: 'AI副業' },
+  { x: 983, y: 18, w: 85, h: 55, href: '/category/entrepreneur/', label: '起業' },
+  { x: 1112, y: 19, w: 85, h: 55, href: '/category/jobchange/', label: '転職' },
+  { x: 1234, y: 18, w: 165, h: 55, href: '/category/career/', label: 'キャリアアップ' },
+  { x: 1411, y: 18, w: 110, h: 55, href: '/about/', label: 'About' },
 
   // CTAボタン
-  { x: 50, y: 400, w: 440, h: 60, href: '#articles', label: '記事を見る' },
+  { x: 74, y: 461, w: 440, h: 60, href: '#articles', label: '記事を見る' },
 
-  // カテゴリカード5つ（左から順番に）
-  { x: 30, y: 520, w: 275, h: 170, href: '/category/investment/', label: '投資' },
-  { x: 318, y: 520, w: 275, h: 170, href: '/category/ai/', label: 'AI副業' },
-  { x: 606, y: 520, w: 275, h: 170, href: '/category/entrepreneur/', label: '起業' },
-  { x: 894, y: 520, w: 275, h: 170, href: '/category/jobchange/', label: '転職' },
-  { x: 1182, y: 520, w: 275, h: 170, href: '/category/career/', label: 'キャリアアップ' },
+  // カテゴリカード5つ
+  { x: 74, y: 568, w: 275, h: 170, href: '/category/investment/', label: '投資' },
+  { x: 355, y: 565, w: 275, h: 170, href: '/category/ai/', label: 'AI副業' },
+  { x: 637, y: 568, w: 275, h: 170, href: '/category/entrepreneur/', label: '起業' },
+  { x: 915, y: 569, w: 275, h: 170, href: '/category/jobchange/', label: '転職' },
+  { x: 1197, y: 568, w: 275, h: 170, href: '/category/career/', label: 'キャリアアップ' },
 
-  // このサイトについてエリア
-  { x: 30, y: 720, w: 1476, h: 290, href: '/about/', label: 'このサイトについて' },
+  // このサイトについて
+  { x: 43, y: 747, w: 1476, h: 290, href: '/about/', label: 'このサイトについて' },
 ];
 
 function placeLinks() {
@@ -160,125 +160,11 @@ function placeLinks() {
     a.style.width = (link.w * scaleX) + 'px';
     a.style.height = (link.h * scaleY) + 'px';
     a.style.cursor = 'pointer';
-    a.style.background = 'rgba(255,0,0,0.2)';
-    a.style.border = '1px solid rgba(255,0,0,0.5)';
-    a.style.zIndex = '10';
-    a.style.fontSize = (10 * scaleX) + 'px';
-    a.style.color = 'red';
-    a.style.display = 'flex';
-    a.style.alignItems = 'center';
-    a.style.justifyContent = 'center';
-    a.style.fontWeight = 'bold';
-    a.textContent = link.label;
-    // ドラッグ対応
-    a.draggable = false;
-    a.addEventListener('click', function(e) { e.preventDefault(); });
-    a.addEventListener('mousedown', startDrag);
-    a.addEventListener('touchstart', startDragTouch, {passive: false});
+    // 本番: 透明リンク
     container.appendChild(a);
   }
 }
 
-// ドラッグ処理
-var dragTarget = null;
-var dragOffsetX = 0;
-var dragOffsetY = 0;
-var dragIndex = -1;
-
-function startDrag(e) {
-  e.preventDefault();
-  dragTarget = e.currentTarget;
-  dragIndex = parseInt(dragTarget.dataset.index);
-  var rect = dragTarget.getBoundingClientRect();
-  dragOffsetX = e.clientX - rect.left;
-  dragOffsetY = e.clientY - rect.top;
-  document.addEventListener('mousemove', onDrag);
-  document.addEventListener('mouseup', stopDrag);
-}
-
-function startDragTouch(e) {
-  e.preventDefault();
-  dragTarget = e.currentTarget;
-  dragIndex = parseInt(dragTarget.dataset.index);
-  var rect = dragTarget.getBoundingClientRect();
-  var touch = e.touches[0];
-  dragOffsetX = touch.clientX - rect.left;
-  dragOffsetY = touch.clientY - rect.top;
-  document.addEventListener('touchmove', onDragTouch, {passive: false});
-  document.addEventListener('touchend', stopDrag);
-}
-
-function onDrag(e) {
-  if (!dragTarget) return;
-  moveTo(e.clientX, e.clientY);
-}
-
-function onDragTouch(e) {
-  if (!dragTarget) return;
-  e.preventDefault();
-  var touch = e.touches[0];
-  moveTo(touch.clientX, touch.clientY);
-}
-
-function moveTo(clientX, clientY) {
-  var img = document.getElementById('hero-img');
-  var imgRect = img.getBoundingClientRect();
-  var newLeft = clientX - imgRect.left - dragOffsetX;
-  var newTop = clientY - imgRect.top - dragOffsetY;
-  dragTarget.style.left = newLeft + 'px';
-  dragTarget.style.top = newTop + 'px';
-  // 元画像座標に変換して保存
-  var scaleX = img.clientWidth / 1536;
-  var scaleY = img.clientHeight / 1024;
-  LINKS[dragIndex].x = Math.round(newLeft / scaleX);
-  LINKS[dragIndex].y = Math.round(newTop / scaleY);
-}
-
-function stopDrag() {
-  dragTarget = null;
-  document.removeEventListener('mousemove', onDrag);
-  document.removeEventListener('mouseup', stopDrag);
-  document.removeEventListener('touchmove', onDragTouch);
-  document.removeEventListener('touchend', stopDrag);
-}
-
-function exportCoords() {
-  var text = LINKS.map(function(l) {
-    return l.label + ': x=' + l.x + ' y=' + l.y + ' w=' + l.w + ' h=' + l.h;
-  }).join('\n');
-  navigator.clipboard.writeText(text).then(function() {
-    alert('座標をコピーしました！そのまま貼り付けて教えてください');
-  }).catch(function() {
-    // clipboard失敗時はpromptで表示
-    prompt('この座標をコピーしてください:', text);
-  });
-}
-
-// エクスポートボタンを追加
-function addExportButton() {
-  var btn = document.createElement('button');
-  btn.textContent = '座標をコピー';
-  btn.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;background:#DC2626;color:white;padding:12px 24px;border-radius:8px;border:none;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
-  btn.addEventListener('click', exportCoords);
-  document.body.appendChild(btn);
-}
-
-// データインデックスを付与
-function addDataIndex() {
-  var container = document.getElementById('hero-links');
-  var children = container.children;
-  for (var i = 0; i < children.length; i++) {
-    children[i].dataset.index = i;
-  }
-}
-
-window.addEventListener('load', function() {
-  placeLinks();
-  addDataIndex();
-  addExportButton();
-});
-window.addEventListener('resize', function() {
-  placeLinks();
-  addDataIndex();
-});
+window.addEventListener('load', placeLinks);
+window.addEventListener('resize', placeLinks);
 </script>
