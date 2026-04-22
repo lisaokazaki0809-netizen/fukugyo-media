@@ -2,8 +2,8 @@ export const categories = {
   investment: {
     name: '投資',
     description: '株式・投資信託・仮想通貨など、資産を増やす副業の選び方',
-    color: '#2563EB',
-    bgColor: '#EFF6FF',
+    color: '#16A34A',
+    bgColor: '#F0FDF4',
     image: '/images/categories/investment.svg',
   },
   ai: {
@@ -16,22 +16,22 @@ export const categories = {
   entrepreneur: {
     name: '起業',
     description: 'スモールビジネスや個人事業の立ち上げガイド',
-    color: '#E67E22',
-    bgColor: '#FFF7ED',
+    color: '#CA8A04',
+    bgColor: '#FEFCE8',
     image: '/images/categories/entrepreneur.svg',
   },
   jobchange: {
     name: '転職',
     description: '転職活動の進め方、エージェント比較、面接対策など',
-    color: '#E74C6F',
-    bgColor: '#FFF1F4',
+    color: '#2563EB',
+    bgColor: '#EFF6FF',
     image: '/images/categories/jobchange.svg',
   },
   career: {
     name: 'キャリアアップ',
     description: '資格取得、スキルアップ、昇進・昇給を目指す戦略',
-    color: '#1E3A5F',
-    bgColor: '#EDF2F7',
+    color: '#DC2626',
+    bgColor: '#FEF2F2',
     image: '/images/categories/career.svg',
   },
 } as const;
