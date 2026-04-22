@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Sidebar from '../../components/Sidebar.astro';
 import { getCategoryName, getCategoryColor, getCategoryBgColor, getCategoryImage } from '../../lib/categories';
 import { SITE } from '../../lib/site';
 
@@ -56,82 +57,92 @@ const articleSchema = {
     { name: post.data.title, href: `/posts/${post.id}/` },
   ]}
 >
-  <!-- Hero image -->
-  <div class="mx-auto max-w-3xl px-4 pt-6">
-    <div class="rounded-xl overflow-hidden aspect-[16/6]">
-      <img src={catImage} alt="" class="w-full h-full object-cover" width="768" height="288" />
+  <div class="mx-auto max-w-7xl px-4 py-6 md:py-8">
+    <div class="flex flex-col lg:flex-row gap-8">
+
+      <!-- メインコンテンツ -->
+      <article class="flex-1 min-w-0" data-pagefind-body>
+        <!-- Hero image -->
+        <div class="rounded-xl overflow-hidden aspect-[16/6] mb-6">
+          <img src={catImage} alt="" class="w-full h-full object-cover" width="768" height="288" />
+        </div>
+
+        <!-- Meta -->
+        <div class="flex items-center gap-2.5 mb-5">
+          <a
+            href={`/category/${post.data.category}/`}
+            class="text-[11px] font-bold uppercase tracking-wide px-2 py-0.5 rounded transition-opacity hover:opacity-80"
+            style={`color: ${catColor}; background-color: ${catBgColor}`}
+          >
+            {getCategoryName(post.data.category)}
+          </a>
+          <time datetime={post.data.pubDate.toISOString()} class="text-[13px] text-text-muted">
+            {formattedDate}
+          </time>
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-2xl md:text-[1.75rem] font-bold text-text leading-tight mb-8">
+          {post.data.title}
+        </h1>
+
+        <!-- Description card -->
+        <div class="bg-bg-muted rounded-xl p-4 mb-8 text-[14px] text-text-secondary leading-relaxed">
+          {post.data.description}
+        </div>
+
+        <!-- Body -->
+        <div class="prose">
+          <Content />
+        </div>
+
+        <!-- Tags -->
+        {post.data.tags.length > 0 && (
+          <div class="mt-10 pt-6 border-t border-border">
+            <div class="flex flex-wrap gap-2">
+              {post.data.tags.map((tag) => (
+                <a
+                  href={`/tag/${tag}/`}
+                  class="text-[12px] bg-bg-muted text-text-secondary rounded-full px-3 py-1 hover:text-accent hover:bg-bg-muted transition-colors"
+                >
+                  #{tag}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Related posts -->
+        {relatedPosts.length > 0 && (
+          <section class="mt-12 pt-8 border-t border-border">
+            <h2 class="text-sm font-bold text-text-muted uppercase tracking-wider mb-4">Related</h2>
+            <div class="space-y-2">
+              {relatedPosts.map((rp) => (
+                <a
+                  href={`/posts/${rp.id}/`}
+                  class="flex items-start gap-3 p-3 rounded-lg hover:bg-bg-muted transition-colors"
+                >
+                  <span
+                    class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded mt-0.5 shrink-0"
+                    style={`color: ${getCategoryColor(rp.data.category)}; background-color: ${getCategoryBgColor(rp.data.category)}`}
+                  >
+                    {getCategoryName(rp.data.category)}
+                  </span>
+                  <span class="text-[14px] font-medium text-text leading-snug">{rp.data.title}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+      </article>
+
+      <!-- サイドバー（PCのみ表示） -->
+      <div class="hidden lg:block w-72 shrink-0">
+        <Sidebar />
+      </div>
+
     </div>
   </div>
-
-  <article class="mx-auto max-w-3xl px-4 py-6 md:py-8" data-pagefind-body>
-    <!-- Meta -->
-    <div class="flex items-center gap-2.5 mb-5">
-      <a
-        href={`/category/${post.data.category}/`}
-        class="text-[11px] font-bold uppercase tracking-wide px-2 py-0.5 rounded transition-opacity hover:opacity-80"
-        style={`color: ${catColor}; background-color: ${catBgColor}`}
-      >
-        {getCategoryName(post.data.category)}
-      </a>
-      <time datetime={post.data.pubDate.toISOString()} class="text-[13px] text-text-muted">
-        {formattedDate}
-      </time>
-    </div>
-
-    <!-- Title -->
-    <h1 class="text-2xl md:text-[1.75rem] font-bold text-text leading-tight mb-8">
-      {post.data.title}
-    </h1>
-
-    <!-- Description card -->
-    <div class="bg-bg-muted rounded-xl p-4 mb-8 text-[14px] text-text-secondary leading-relaxed">
-      {post.data.description}
-    </div>
-
-    <!-- Body -->
-    <div class="prose">
-      <Content />
-    </div>
-
-    <!-- Tags -->
-    {post.data.tags.length > 0 && (
-      <div class="mt-10 pt-6 border-t border-border">
-        <div class="flex flex-wrap gap-2">
-          {post.data.tags.map((tag) => (
-            <a
-              href={`/tag/${tag}/`}
-              class="text-[12px] bg-bg-muted text-text-secondary rounded-full px-3 py-1 hover:text-accent hover:bg-bg-muted transition-colors"
-            >
-              #{tag}
-            </a>
-          ))}
-        </div>
-      </div>
-    )}
-
-    <!-- Related posts -->
-    {relatedPosts.length > 0 && (
-      <section class="mt-12 pt-8 border-t border-border">
-        <h2 class="text-sm font-bold text-text-muted uppercase tracking-wider mb-4">Related</h2>
-        <div class="space-y-2">
-          {relatedPosts.map((rp) => (
-            <a
-              href={`/posts/${rp.id}/`}
-              class="flex items-start gap-3 p-3 rounded-lg hover:bg-bg-muted transition-colors"
-            >
-              <span
-                class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded mt-0.5 shrink-0"
-                style={`color: ${getCategoryColor(rp.data.category)}; background-color: ${getCategoryBgColor(rp.data.category)}`}
-              >
-                {getCategoryName(rp.data.category)}
-              </span>
-              <span class="text-[14px] font-medium text-text leading-snug">{rp.data.title}</span>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
-  </article>
 
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 </Base>

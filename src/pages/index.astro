@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { categories, getCategoryColor, getCategoryBgColor } from '../lib/categories';
+import Sidebar from '../components/Sidebar.astro';
 import { SITE } from '../lib/site';
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
@@ -96,8 +97,10 @@ const restPosts = sortedPosts.slice(3);
     </div>
   </section>
 
-  <!-- 記事一覧 -->
-  <div id="articles" class="mx-auto max-w-6xl px-4 scroll-mt-4">
+  <!-- 記事一覧 + サイドバー -->
+  <div id="articles" class="mx-auto max-w-7xl px-4 scroll-mt-4">
+    <div class="flex flex-col lg:flex-row gap-8">
+    <div class="flex-1 min-w-0">
     {featuredPosts.length > 0 && (
       <section class="py-8">
         <h2 class="text-sm font-bold text-text-muted uppercase tracking-wider mb-5">Pick Up</h2>
@@ -192,6 +195,14 @@ const restPosts = sortedPosts.slice(3);
         </a>
       </div>
     </section>
+    </div><!-- /flex-1 -->
+
+    <!-- サイドバー（PCのみ） -->
+    <div class="hidden lg:block w-72 shrink-0 pt-8">
+      <Sidebar />
+    </div>
+
+    </div><!-- /flex row -->
   </div>
 </Base>
 

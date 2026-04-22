@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import { categories, getCategoryColor, getCategoryBgColor, getCategoryName } from '../lib/categories';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const recentPosts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 8);
+---
+
+<aside class="space-y-6">
+  <!-- 広告枠1 -->
+  <div class="bg-bg-muted border border-border rounded-xl p-6 text-center">
+    <p class="text-[11px] text-text-muted mb-2">SPONSORED</p>
+    <div class="h-48 flex items-center justify-center text-text-muted text-sm">
+      広告枠
+    </div>
+  </div>
+
+  <!-- 最新記事一覧 -->
+  <div class="bg-white border border-border rounded-xl overflow-hidden">
+    <div class="px-4 py-3 bg-bg-muted border-b border-border">
+      <h3 class="text-[13px] font-bold text-text">最新の記事</h3>
+    </div>
+    <div class="divide-y divide-border">
+      {recentPosts.map((post) => (
+        <a href={`/posts/${post.id}/`} class="block px-4 py-3 hover:bg-bg-soft transition-colors group">
+          <div class="flex items-center gap-2 mb-1">
+            <span
+              class="text-[10px] font-bold px-1.5 py-0.5 rounded"
+              style={`color: ${getCategoryColor(post.data.category)}; background-color: ${getCategoryBgColor(post.data.category)}`}
+            >
+              {getCategoryName(post.data.category)}
+            </span>
+            <span class="text-[11px] text-text-muted">
+              {post.data.pubDate.toLocaleDateString('ja-JP', { month: '2-digit', day: '2-digit' })}
+            </span>
+          </div>
+          <p class="text-[13px] text-text leading-snug group-hover:text-accent transition-colors line-clamp-2">
+            {post.data.title}
+          </p>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- カテゴリ一覧 -->
+  <div class="bg-white border border-border rounded-xl overflow-hidden">
+    <div class="px-4 py-3 bg-bg-muted border-b border-border">
+      <h3 class="text-[13px] font-bold text-text">カテゴリ</h3>
+    </div>
+    <div class="p-3 space-y-1">
+      {Object.entries(categories).map(([slug, cat]) => (
+        <a
+          href={`/category/${slug}/`}
+          class="flex items-center gap-2 px-3 py-2 rounded-lg text-[13px] text-text-secondary hover:bg-bg-soft hover:text-accent transition-colors"
+        >
+          <span class="w-2 h-2 rounded-full shrink-0" style={`background-color: ${cat.color}`}></span>
+          {cat.name}
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- 広告枠2 -->
+  <div class="bg-bg-muted border border-border rounded-xl p-6 text-center sticky top-20">
+    <p class="text-[11px] text-text-muted mb-2">SPONSORED</p>
+    <div class="h-64 flex items-center justify-center text-text-muted text-sm">
+      広告枠
+    </div>
+  </div>
+</aside>
