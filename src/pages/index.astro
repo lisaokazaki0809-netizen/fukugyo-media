@@ -16,25 +16,15 @@ const restPosts = sortedPosts.slice(3);
 <Base>
   <!-- Hero -->
   <section class="bg-white border-b border-border">
-    <div class="mx-auto max-w-6xl px-4 py-10 md:py-14">
-      <h1 class="text-3xl md:text-4xl font-bold text-text tracking-tight mb-3">
-        {SITE.title}
-      </h1>
-      <p class="text-text-secondary text-sm md:text-base max-w-lg leading-relaxed">
-        {SITE.description}
-      </p>
-      <!-- Category pills -->
-      <div class="flex flex-wrap gap-2 mt-6">
-        {Object.entries(categories).map(([slug, cat]) => (
-          <a
-            href={`/category/${slug}/`}
-            class="text-[12px] font-semibold px-3 py-1.5 rounded-full transition-all hover:shadow-sm"
-            style={`color: ${cat.color}; background-color: ${cat.bgColor}`}
-          >
-            {cat.name}
-          </a>
-        ))}
-      </div>
+    <div class="mx-auto max-w-6xl">
+      <img
+        src="/images/hero.jpg"
+        alt="副業・投資・キャリアのリアルを記録するメディア わらじ二足"
+        class="w-full h-auto"
+        width="1344"
+        height="640"
+        fetchpriority="high"
+      />
     </div>
   </section>
 
