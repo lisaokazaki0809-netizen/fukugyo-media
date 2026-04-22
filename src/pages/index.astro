@@ -13,46 +13,102 @@ const featuredPosts = sortedPosts.slice(0, 3);
 const restPosts = sortedPosts.slice(3);
 ---
 
-<Base hideHeader>
-  <!-- Hero: 画像全体を表示し、透明リンクを重ねる -->
-  <section class="relative">
-    <div class="mx-auto max-w-6xl">
-      <img
-        src="/images/hero.jpg"
-        alt="副業・投資・キャリアのリアルを記録するメディア わらじ二足"
-        class="w-full h-auto block"
-        width="1536"
-        height="1024"
-        fetchpriority="high"
-      />
+<Base>
+  <!-- Hero ビジュアル -->
+  <section class="bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="mx-auto max-w-6xl px-4 py-10 md:py-16">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <p class="text-text-muted text-sm mb-3">本業を続けながら、未来の選択肢を広げる</p>
+          <h1 class="text-3xl md:text-4xl font-bold text-text leading-tight mb-4">
+            副業・投資・キャリアの<br />
+            <span class="text-accent">リアル</span>を記録するメディア
+          </h1>
+          <p class="text-text-secondary text-[15px] leading-relaxed mb-6">
+            30代会社員が実際に調べて、比較して、考えたことを<br class="hidden md:inline" />
+            正直にまとめています。
+          </p>
+          <a
+            href="#articles"
+            class="inline-flex items-center gap-2 border-2 border-text text-text px-6 py-3 rounded-full text-[14px] font-medium hover:bg-text hover:text-white transition-colors"
+          >
+            情報を比較して、自分らしい選択を見つけよう
+            <span>&rsaquo;</span>
+          </a>
+        </div>
+        <div class="hidden md:block">
+          <img
+            src="/images/hero.jpg"
+            alt="副業・投資の調査イメージ"
+            class="w-full h-auto rounded-2xl shadow-lg"
+            width="600"
+            height="400"
+            fetchpriority="high"
+            style="object-fit: cover; aspect-ratio: 3/2; object-position: 65% 30%;"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <!-- ヘッダーナビのリンク（画像上部: わらじ二足 | 投資 AI副業 起業 転職 キャリアアップ About） -->
-      <a href="/" class="absolute top-[0.5%] left-[1%] w-[9%] h-[5%]" aria-label="トップ"></a>
-      <a href="/category/investment/" class="absolute top-[0.8%] left-[47%] w-[6%] h-[4%]" aria-label="投資"></a>
-      <a href="/category/ai/" class="absolute top-[0.8%] left-[54%] w-[7%] h-[4%]" aria-label="AI副業"></a>
-      <a href="/category/entrepreneur/" class="absolute top-[0.8%] left-[62%] w-[5%] h-[4%]" aria-label="起業"></a>
-      <a href="/category/jobchange/" class="absolute top-[0.8%] left-[68%] w-[5%] h-[4%]" aria-label="転職"></a>
-      <a href="/category/career/" class="absolute top-[0.8%] left-[74%] w-[10%] h-[4%]" aria-label="キャリアアップ"></a>
-      <a href="/about/" class="absolute top-[0.8%] left-[85%] w-[6%] h-[4%]" aria-label="About"></a>
+  <!-- カテゴリナビ -->
+  <section class="bg-white border-y border-border">
+    <div class="mx-auto max-w-6xl px-4 py-6">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {Object.entries(categories).map(([slug, cat]) => (
+          <a
+            href={`/category/${slug}/`}
+            class="group flex flex-col gap-1.5 p-4 rounded-xl border border-border hover:shadow-md transition-all"
+          >
+            <p class="text-[16px] font-bold group-hover:opacity-80 transition-opacity" style={`color: ${cat.color}`}>
+              {cat.name}
+            </p>
+            <p class="text-[12px] text-text-muted leading-snug">
+              {cat.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
-      <!-- CTAボタン -->
-      <a href="#articles" class="absolute top-[37%] left-[3%] w-[30%] h-[5%] rounded-full" aria-label="記事を見る"></a>
-
-      <!-- カテゴリカード5つ（画像下部: 投資 | AI副業 | 起業 | 転職 | キャリアアップ） -->
-      <a href="/category/investment/" class="absolute top-[49%] left-[2%] w-[18%] h-[16%] rounded-xl" aria-label="投資"></a>
-      <a href="/category/ai/" class="absolute top-[49%] left-[21%] w-[18%] h-[16%] rounded-xl" aria-label="AI副業"></a>
-      <a href="/category/entrepreneur/" class="absolute top-[49%] left-[40.5%] w-[18%] h-[16%] rounded-xl" aria-label="起業"></a>
-      <a href="/category/jobchange/" class="absolute top-[49%] left-[60%] w-[18%] h-[16%] rounded-xl" aria-label="転職"></a>
-      <a href="/category/career/" class="absolute top-[49%] left-[79.5%] w-[18.5%] h-[16%] rounded-xl" aria-label="キャリアアップ"></a>
-
-      <!-- このサイトについてエリア -->
-      <a href="/about/" class="absolute top-[69%] left-[2%] w-[96%] h-[29%] rounded-xl" aria-label="このサイトについて"></a>
+  <!-- このサイトについて -->
+  <section class="bg-bg-soft border-b border-border">
+    <div class="mx-auto max-w-6xl px-4 py-8">
+      <h2 class="text-lg font-bold text-text mb-5">このサイトについて</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white rounded-xl p-5 border border-border">
+          <p class="font-bold text-[14px] text-text mb-2">書いている人</p>
+          <p class="text-[13px] text-text-secondary leading-relaxed">
+            30代の会社員です。本業を続けながら、副業や投資、転職やキャリアアップについて調べたり比較したりしています。
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-border">
+          <p class="font-bold text-[14px] text-text mb-2">なぜ書くのか</p>
+          <p class="text-[13px] text-text-secondary leading-relaxed">
+            ネット上の副業情報は煽り記事が多くて、冷静に比較検討できる情報が少ないと感じていました。盛らずにそのまま書いています。
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-border">
+          <p class="font-bold text-[14px] text-text mb-2">扱うジャンル</p>
+          <ul class="text-[13px] text-text-secondary leading-relaxed space-y-1">
+            {Object.entries(categories).map(([_, cat]) => (
+              <li><span class="font-medium text-text">{cat.name}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-border">
+          <p class="font-bold text-[14px] text-text mb-2">注意事項</p>
+          <p class="text-[13px] text-text-secondary leading-relaxed">
+            あくまで個人が調べた内容の記録です。特定の副業や投資を推奨するものではありません。判断はご自身の責任でお願いします。
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- 記事一覧 -->
   <div id="articles" class="mx-auto max-w-6xl px-4 scroll-mt-4">
-    <!-- Featured posts -->
     {featuredPosts.length > 0 && (
       <section class="py-8">
         <h2 class="text-sm font-bold text-text-muted uppercase tracking-wider mb-5">Pick Up</h2>
@@ -73,7 +129,6 @@ const restPosts = sortedPosts.slice(3);
 
     <hr class="border-border" />
 
-    <!-- All posts -->
     <section class="py-8">
       <h2 class="text-sm font-bold text-text-muted uppercase tracking-wider mb-5">All Articles</h2>
       {restPosts.length === 0 ? (
@@ -93,7 +148,6 @@ const restPosts = sortedPosts.slice(3);
       )}
     </section>
 
-    <!-- Category sections -->
     {Object.entries(categories).map(([slug, cat]) => {
       const catPosts = sortedPosts.filter(p => p.data.category === slug).slice(0, 3);
       if (catPosts.length === 0) return null;

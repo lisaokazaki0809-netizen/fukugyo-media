@@ -16,22 +16,22 @@ export const categories = {
   entrepreneur: {
     name: '起業',
     description: 'スモールビジネスや個人事業の立ち上げガイド',
-    color: '#059669',
-    bgColor: '#ECFDF5',
+    color: '#E67E22',
+    bgColor: '#FFF7ED',
     image: '/images/categories/entrepreneur.svg',
   },
   jobchange: {
     name: '転職',
     description: '転職活動の進め方、エージェント比較、面接対策など',
-    color: '#DC2626',
-    bgColor: '#FEF2F2',
+    color: '#E74C6F',
+    bgColor: '#FFF1F4',
     image: '/images/categories/jobchange.svg',
   },
   career: {
     name: 'キャリアアップ',
     description: '資格取得、スキルアップ、昇進・昇給を目指す戦略',
-    color: '#D97706',
-    bgColor: '#FFFBEB',
+    color: '#1E3A5F',
+    bgColor: '#EDF2F7',
     image: '/images/categories/career.svg',
   },
 } as const;
