@@ -113,13 +113,20 @@ const restPosts = sortedPosts.slice(3);
 // 元画像: 1536 x 1024
 var LINKS = [
   // ヘッダーナビ（左から順番に）
-  { x: 22, y: 10, w: 130, h: 45, href: '/', label: 'トップ' },
-  { x: 535, y: 12, w: 70, h: 40, href: '/category/investment/', label: '投資' },
-  { x: 630, y: 12, w: 90, h: 40, href: '/category/ai/', label: 'AI副業' },
-  { x: 740, y: 12, w: 65, h: 40, href: '/category/entrepreneur/', label: '起業' },
-  { x: 830, y: 12, w: 60, h: 40, href: '/category/jobchange/', label: '転職' },
-  { x: 910, y: 12, w: 140, h: 40, href: '/category/career/', label: 'キャリアアップ' },
-  { x: 1075, y: 12, w: 80, h: 40, href: '/about/', label: 'About' },
+  // わらじ二足ロゴ
+  { x: 22, y: 8, w: 140, h: 48, href: '/', label: 'トップ' },
+  // 投資（アイコン+テキスト）
+  { x: 730, y: 8, w: 90, h: 48, href: '/category/investment/', label: '投資' },
+  // AI副業
+  { x: 840, y: 8, w: 110, h: 48, href: '/category/ai/', label: 'AI副業' },
+  // 起業
+  { x: 965, y: 8, w: 80, h: 48, href: '/category/entrepreneur/', label: '起業' },
+  // 転職
+  { x: 1060, y: 8, w: 80, h: 48, href: '/category/jobchange/', label: '転職' },
+  // キャリアアップ
+  { x: 1155, y: 8, w: 160, h: 48, href: '/category/career/', label: 'キャリアアップ' },
+  // About
+  { x: 1335, y: 8, w: 100, h: 48, href: '/about/', label: 'About' },
 
   // CTAボタン
   { x: 55, y: 370, w: 420, h: 55, href: '#articles', label: '記事を見る' },
@@ -160,7 +167,7 @@ function placeLinks() {
     a.style.width = (link.w * scaleX) + 'px';
     a.style.height = (link.h * scaleY) + 'px';
     a.style.cursor = 'pointer';
-    // デバッグ用（本番では消す）: a.style.background = 'rgba(255,0,0,0.15)';
+    a.style.background = 'rgba(255,0,0,0.15)'; // デバッグ用
     container.appendChild(a);
   }
 }
