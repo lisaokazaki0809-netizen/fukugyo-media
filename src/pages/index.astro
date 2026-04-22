@@ -28,6 +28,10 @@ const restPosts = sortedPosts.slice(3);
           fetchpriority="high"
           id="hero-img"
         />
+        <!-- ロゴ上書き: 画像内の「わらじ二足」を「副業media」に差し替え -->
+        <div id="hero-logo" class="absolute flex items-center" style="background:#f8fafc;">
+          <span style="font-size:inherit; font-weight:800; color:#1a1a2e; letter-spacing:-0.02em; white-space:nowrap;">副業media</span>
+        </div>
         <!-- リンクはJSでピクセル単位で配置する -->
         <div id="hero-links"></div>
       </div>
@@ -146,6 +150,17 @@ function placeLinks() {
   var origH = 1024;
   var scaleX = displayW / origW;
   var scaleY = displayH / origH;
+
+  // ロゴ上書きの位置とサイズを合わせる
+  var logo = document.getElementById('hero-logo');
+  if (logo) {
+    logo.style.left = (32 * scaleX) + 'px';
+    logo.style.top = (18 * scaleY) + 'px';
+    logo.style.width = (180 * scaleX) + 'px';
+    logo.style.height = (55 * scaleY) + 'px';
+    logo.style.fontSize = (28 * scaleX) + 'px';
+    logo.style.paddingLeft = (6 * scaleX) + 'px';
+  }
 
   container.innerHTML = '';
 
