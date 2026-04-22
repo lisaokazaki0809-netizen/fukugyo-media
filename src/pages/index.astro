@@ -13,9 +13,9 @@ const featuredPosts = sortedPosts.slice(0, 3);
 const restPosts = sortedPosts.slice(3);
 ---
 
-<Base>
-  <!-- Hero -->
-  <section class="bg-white border-b border-border">
+<Base hideHeader>
+  <!-- Hero (画像内にナビ・テキスト・ボタンが含まれている) -->
+  <section class="border-b border-border relative">
     <div class="mx-auto max-w-6xl">
       <img
         src="/images/hero.jpg"
@@ -25,10 +25,16 @@ const restPosts = sortedPosts.slice(3);
         height="640"
         fetchpriority="high"
       />
+      <!-- ボタンのクリック領域（画像内のCTAボタン位置に合わせる） -->
+      <a
+        href="#articles"
+        class="absolute bottom-[22%] left-[4%] md:left-[3%] w-[30%] md:w-[28%] h-[6%] md:h-[7%] rounded-full"
+        aria-label="情報を比較して、自分らしい選択を見つけよう"
+      ></a>
     </div>
   </section>
 
-  <div class="mx-auto max-w-6xl px-4">
+  <div id="articles" class="mx-auto max-w-6xl px-4 scroll-mt-4">
     <!-- Featured posts -->
     {featuredPosts.length > 0 && (
       <section class="py-8">
