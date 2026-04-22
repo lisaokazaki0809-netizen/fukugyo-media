@@ -13,95 +13,23 @@ const featuredPosts = sortedPosts.slice(0, 3);
 const restPosts = sortedPosts.slice(3);
 ---
 
-<Base>
-  <!-- Hero ビジュアル -->
-  <section class="bg-gradient-to-br from-slate-50 to-blue-50">
-    <div class="mx-auto max-w-6xl px-4 py-10 md:py-16">
-      <div class="grid md:grid-cols-2 gap-8 items-center">
-        <div>
-          <p class="text-text-muted text-sm mb-3">本業を続けながら、未来の選択肢を広げる</p>
-          <h1 class="text-3xl md:text-4xl font-bold text-text leading-tight mb-4">
-            副業・投資・キャリアの<br />
-            <span class="text-accent">リアル</span>を記録するメディア
-          </h1>
-          <p class="text-text-secondary text-[15px] leading-relaxed mb-6">
-            30代会社員が実際に調べて、比較して、考えたことを<br class="hidden md:inline" />
-            正直にまとめています。
-          </p>
-          <a
-            href="#articles"
-            class="inline-flex items-center gap-2 border-2 border-text text-text px-6 py-3 rounded-full text-[14px] font-medium hover:bg-text hover:text-white transition-colors"
-          >
-            情報を比較して、自分らしい選択を見つけよう
-            <span>&rsaquo;</span>
-          </a>
-        </div>
-        <div class="hidden md:block">
-          <img
-            src="/images/hero-visual.jpg"
-            alt="副業・投資の調査イメージ"
-            class="w-full h-auto rounded-2xl shadow-lg"
-            width="800"
-            height="480"
-            fetchpriority="high"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- カテゴリナビ -->
-  <section class="bg-white border-y border-border">
-    <div class="mx-auto max-w-6xl px-4 py-6">
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-        {Object.entries(categories).map(([slug, cat]) => (
-          <a
-            href={`/category/${slug}/`}
-            class="group flex flex-col gap-1.5 p-4 rounded-xl border border-border hover:shadow-md transition-all"
-          >
-            <p class="text-[16px] font-bold group-hover:opacity-80 transition-opacity" style={`color: ${cat.color}`}>
-              {cat.name}
-            </p>
-            <p class="text-[12px] text-text-muted leading-snug">
-              {cat.description}
-            </p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- このサイトについて -->
-  <section class="bg-bg-soft border-b border-border">
-    <div class="mx-auto max-w-6xl px-4 py-8">
-      <h2 class="text-lg font-bold text-text mb-5">このサイトについて</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white rounded-xl p-5 border border-border">
-          <p class="font-bold text-[14px] text-text mb-2">書いている人</p>
-          <p class="text-[13px] text-text-secondary leading-relaxed">
-            30代の会社員です。本業を続けながら、副業や投資、転職やキャリアアップについて調べたり比較したりしています。
-          </p>
-        </div>
-        <div class="bg-white rounded-xl p-5 border border-border">
-          <p class="font-bold text-[14px] text-text mb-2">なぜ書くのか</p>
-          <p class="text-[13px] text-text-secondary leading-relaxed">
-            ネット上の副業情報は煽り記事が多くて、冷静に比較検討できる情報が少ないと感じていました。盛らずにそのまま書いています。
-          </p>
-        </div>
-        <div class="bg-white rounded-xl p-5 border border-border">
-          <p class="font-bold text-[14px] text-text mb-2">扱うジャンル</p>
-          <ul class="text-[13px] text-text-secondary leading-relaxed space-y-1">
-            {Object.entries(categories).map(([_, cat]) => (
-              <li><span class="font-medium text-text">{cat.name}</span></li>
-            ))}
-          </ul>
-        </div>
-        <div class="bg-white rounded-xl p-5 border border-border">
-          <p class="font-bold text-[14px] text-text mb-2">注意事項</p>
-          <p class="text-[13px] text-text-secondary leading-relaxed">
-            あくまで個人が調べた内容の記録です。特定の副業や投資を推奨するものではありません。判断はご自身の責任でお願いします。
-          </p>
-        </div>
+<Base hideHeader>
+  <!-- Hero: 画像を丸ごと表示。クリック可能な領域を重ねる -->
+  <section class="relative">
+    <div class="mx-auto max-w-6xl">
+      <!-- 画像MAP用にposition relativeのラッパーが必要 -->
+      <div class="relative">
+        <img
+          src="/images/hero.jpg"
+          alt="副業・投資・キャリアのリアルを記録するメディア わらじ二足"
+          class="w-full h-auto block"
+          width="1536"
+          height="1024"
+          fetchpriority="high"
+          id="hero-img"
+        />
+        <!-- リンクはJSでピクセル単位で配置する -->
+        <div id="hero-links"></div>
       </div>
     </div>
   </section>
@@ -179,3 +107,65 @@ const restPosts = sortedPosts.slice(3);
     })}
   </div>
 </Base>
+
+<script is:inline>
+// 画像の元サイズに対するピクセル座標でリンクを定義
+// 元画像: 1536 x 1024
+var LINKS = [
+  // ヘッダーナビ（左から順番に）
+  { x: 22, y: 10, w: 130, h: 45, href: '/', label: 'トップ' },
+  { x: 535, y: 12, w: 70, h: 40, href: '/category/investment/', label: '投資' },
+  { x: 630, y: 12, w: 90, h: 40, href: '/category/ai/', label: 'AI副業' },
+  { x: 740, y: 12, w: 65, h: 40, href: '/category/entrepreneur/', label: '起業' },
+  { x: 830, y: 12, w: 60, h: 40, href: '/category/jobchange/', label: '転職' },
+  { x: 910, y: 12, w: 140, h: 40, href: '/category/career/', label: 'キャリアアップ' },
+  { x: 1075, y: 12, w: 80, h: 40, href: '/about/', label: 'About' },
+
+  // CTAボタン
+  { x: 55, y: 370, w: 420, h: 55, href: '#articles', label: '記事を見る' },
+
+  // カテゴリカード5つ（左から順番に）
+  { x: 30, y: 480, w: 270, h: 160, href: '/category/investment/', label: '投資' },
+  { x: 315, y: 480, w: 270, h: 160, href: '/category/ai/', label: 'AI副業' },
+  { x: 600, y: 480, w: 270, h: 160, href: '/category/entrepreneur/', label: '起業' },
+  { x: 885, y: 480, w: 270, h: 160, href: '/category/jobchange/', label: '転職' },
+  { x: 1170, y: 480, w: 270, h: 160, href: '/category/career/', label: 'キャリアアップ' },
+
+  // このサイトについてエリア
+  { x: 30, y: 680, w: 1476, h: 320, href: '/about/', label: 'このサイトについて' },
+];
+
+function placeLinks() {
+  var img = document.getElementById('hero-img');
+  var container = document.getElementById('hero-links');
+  if (!img || !container) return;
+
+  var displayW = img.clientWidth;
+  var displayH = img.clientHeight;
+  var origW = 1536;
+  var origH = 1024;
+  var scaleX = displayW / origW;
+  var scaleY = displayH / origH;
+
+  container.innerHTML = '';
+
+  for (var i = 0; i < LINKS.length; i++) {
+    var link = LINKS[i];
+    var a = document.createElement('a');
+    a.href = link.href;
+    a.setAttribute('aria-label', link.label);
+    a.style.position = 'absolute';
+    a.style.left = (link.x * scaleX) + 'px';
+    a.style.top = (link.y * scaleY) + 'px';
+    a.style.width = (link.w * scaleX) + 'px';
+    a.style.height = (link.h * scaleY) + 'px';
+    a.style.cursor = 'pointer';
+    // デバッグ用（本番では消す）: a.style.background = 'rgba(255,0,0,0.15)';
+    container.appendChild(a);
+  }
+}
+
+// 画像読み込み後とリサイズ時に再配置
+window.addEventListener('load', placeLinks);
+window.addEventListener('resize', placeLinks);
+</script>
