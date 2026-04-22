@@ -23,11 +23,11 @@ const formattedDate = pubDate.toLocaleDateString('ja-JP', {
 });
 ---
 
-<article class="group h-full">
-  <a href={`/posts/${slug}/`} class="block h-full">
-    <div class={`h-full bg-white rounded-xl overflow-hidden transition-all duration-200 ${featured ? 'shadow-sm hover:shadow-md' : 'hover:shadow-sm'} border border-transparent hover:border-border`}>
-      <!-- Thumbnail -->
-      <div class="aspect-[334/240] overflow-hidden bg-bg-muted">
+<article class="group">
+  <a href={`/posts/${slug}/`} class="block">
+    <div class="bg-white rounded-xl overflow-hidden transition-all duration-200 hover:shadow-md border border-transparent hover:border-border">
+      <!-- Thumbnail: 高さ固定 -->
+      <div class="h-40 overflow-hidden bg-bg-muted">
         <img
           src={catImage}
           alt=""
@@ -37,10 +37,11 @@ const formattedDate = pubDate.toLocaleDateString('ja-JP', {
           height="240"
         />
       </div>
-      <div class="p-4">
-        <div class="flex items-center gap-2 mb-2.5">
+      <!-- テキスト部分: 高さ固定 -->
+      <div class="p-4 h-36 flex flex-col">
+        <div class="flex items-center gap-2 mb-2">
           <span
-            class="text-[11px] font-bold uppercase tracking-wide px-2 py-0.5 rounded"
+            class="text-[11px] font-bold uppercase tracking-wide px-2 py-0.5 rounded shrink-0"
             style={`color: ${catColor}; background-color: ${catBgColor}`}
           >
             {getCategoryName(category)}
@@ -49,10 +50,10 @@ const formattedDate = pubDate.toLocaleDateString('ja-JP', {
             {formattedDate}
           </time>
         </div>
-        <h3 class={`font-bold text-text leading-snug group-hover:text-accent transition-colors mb-1.5 ${featured ? 'text-[16px]' : 'text-[15px]'}`}>
+        <h3 class="text-[15px] font-bold text-text leading-snug group-hover:text-accent transition-colors mb-1.5 line-clamp-2">
           {title}
         </h3>
-        <p class="text-[13px] text-text-secondary line-clamp-2 leading-relaxed">
+        <p class="text-[13px] text-text-secondary line-clamp-2 leading-relaxed mt-auto">
           {description}
         </p>
       </div>
