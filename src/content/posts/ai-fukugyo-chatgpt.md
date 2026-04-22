@@ -1,5 +1,5 @@
 ---
-title: "ChatGPTを使った副業は実際に稼げるのか調べた"
+title: "ChatGPTで副業は稼げるのか？4つの方法を検証して分かったこと"
 description: "ChatGPTで稼ぐ方法として紹介されているものを片っ端から調べて、現実的な収入額と必要スキルを整理した。"
 pubDate: 2026-04-17
 category: "ai"
