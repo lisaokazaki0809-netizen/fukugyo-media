@@ -11,29 +11,93 @@ const sortedPosts = allPosts.sort(
 );
 const featuredPosts = sortedPosts.slice(0, 3);
 const restPosts = sortedPosts.slice(3);
+
+const categoryIcons: Record<string, string> = {
+  investment: '&#128200;',
+  ai: '&#129302;',
+  entrepreneur: '&#128161;',
+  jobchange: '&#128231;',
+  career: '&#128202;',
+};
 ---
 
 <Base hideHeader>
-  <!-- Hero (画像内にナビ・テキスト・ボタンが含まれている) -->
-  <section class="border-b border-border relative">
+  <!-- Hero image (上部60%だけ表示、カテゴリカード以下はHTMLで再現) -->
+  <section class="relative overflow-hidden">
     <div class="mx-auto max-w-6xl">
-      <img
-        src="/images/hero.jpg"
-        alt="副業・投資・キャリアのリアルを記録するメディア わらじ二足"
-        class="w-full h-auto"
-        width="1344"
-        height="640"
-        fetchpriority="high"
-      />
-      <!-- ボタンのクリック領域（画像内のCTAボタン位置に合わせる） -->
+      <div class="relative overflow-hidden" style="max-height: 480px;">
+        <img
+          src="/images/hero.jpg"
+          alt="副業・投資・キャリアのリアルを記録するメディア わらじ二足"
+          class="w-full h-auto"
+          width="1536"
+          height="1024"
+          fetchpriority="high"
+          style="margin-top: -2%; margin-bottom: -42%;"
+        />
+      </div>
+      <!-- CTAボタンの透明リンク -->
       <a
         href="#articles"
-        class="absolute bottom-[22%] left-[4%] md:left-[3%] w-[30%] md:w-[28%] h-[6%] md:h-[7%] rounded-full"
+        class="absolute bottom-[18%] left-[3%] md:left-[3%] w-[32%] md:w-[26%] h-[10%] md:h-[12%] rounded-full"
         aria-label="情報を比較して、自分らしい選択を見つけよう"
       ></a>
     </div>
   </section>
 
+  <!-- カテゴリナビ（HTML版。画像内のカテゴリカードを再現） -->
+  <section class="bg-white border-b border-border">
+    <div class="mx-auto max-w-6xl px-4 py-6">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {Object.entries(categories).map(([slug, cat]) => (
+          <a
+            href={`/category/${slug}/`}
+            class="group flex items-start gap-3 p-4 rounded-xl border border-border hover:border-accent/30 hover:shadow-sm transition-all bg-white"
+          >
+            <div class="text-2xl shrink-0 mt-0.5" set:html={categoryIcons[slug]} />
+            <div class="min-w-0">
+              <p class="font-bold text-[15px] group-hover:text-accent transition-colors" style={`color: ${cat.color}`}>
+                {cat.name}
+              </p>
+              <p class="text-[12px] text-text-muted leading-snug mt-0.5 line-clamp-2">
+                {cat.description.replace(/など|の選び方|の始め方と稼ぎ方|の立ち上げガイド/g, '')}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- このサイトについて -->
+  <section class="bg-bg-soft border-b border-border">
+    <div class="mx-auto max-w-6xl px-4 py-10">
+      <h2 class="text-xl font-bold text-text mb-6">このサイトについて</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl p-6 border border-border">
+          <p class="font-bold text-[15px] text-text mb-2">書いている人</p>
+          <p class="text-[14px] text-text-secondary leading-relaxed">
+            30代の会社員です。本業を続けながら、副業や投資、転職やキャリアアップについて調べたり比較したりしています。
+            調べた内容や考えたことを、盛らずに記録しています。
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-border">
+          <p class="font-bold text-[15px] text-text mb-2">なぜ書くのか</p>
+          <p class="text-[14px] text-text-secondary leading-relaxed">
+            ネット上の副業情報は煽り記事が多くて、冷静に比較検討できる情報が少ないと感じていました。
+            自分が調べたことをそのまま書くことで、同じように検討している方の参考になればと思っています。
+          </p>
+        </div>
+      </div>
+      <div class="mt-4 text-right">
+        <a href="/about/" class="text-[13px] text-accent hover:underline">
+          もっと詳しく &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 記事一覧 -->
   <div id="articles" class="mx-auto max-w-6xl px-4 scroll-mt-4">
     <!-- Featured posts -->
     {featuredPosts.length > 0 && (
@@ -54,7 +118,6 @@ const restPosts = sortedPosts.slice(3);
       </section>
     )}
 
-    <!-- Divider -->
     <hr class="border-border" />
 
     <!-- All posts -->
