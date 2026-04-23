@@ -1,7 +1,7 @@
 ---
 title: "ロボアドバイザーに預けるだけで増える？手数料の差額を30年分シミュレーションした結果"
 description: "WealthNaviやTHEOなどのロボアドバイザーの仕組み、手数料の長期影響、実際のリターンを調べて徹底比較した。"
-pubDate: 2026-04-09
+pubDate: 2026-02-28
 category: "investment"
 tags: ["ロボアドバイザー", "WealthNavi", "投資信託", "初心者"]
 ---

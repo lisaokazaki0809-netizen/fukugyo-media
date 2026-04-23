@@ -1,7 +1,7 @@
 ---
 title: "AI画像生成で副業、ストックフォトとLINEスタンプどちらが現実的か"
 description: "MidjourneyやStable DiffusionでAI画像を生成して販売する副業について、各プラットフォームの対応状況と現実的な収入を調べた。"
-pubDate: 2026-04-12
+pubDate: 2026-03-24
 category: "ai"
 tags: ["AI画像生成", "Midjourney", "LINEスタンプ", "ストックフォト"]
 ---

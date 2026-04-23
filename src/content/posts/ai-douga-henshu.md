@@ -1,7 +1,7 @@
 ---
 title: "AI動画編集ツールで副業参入のハードルは下がった？月5万円までのリアルな道のり"
 description: "CapCut、Runway、Vrewなど主要AIツールの比較と、動画編集副業の現実的な収入、案件の取り方を調べた。"
-pubDate: 2026-04-04
+pubDate: 2026-01-28
 category: "ai"
 tags: ["動画編集", "AI", "YouTube", "副業の始め方"]
 ---
