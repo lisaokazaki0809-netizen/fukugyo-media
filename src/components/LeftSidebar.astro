@@ -1,0 +1,112 @@
+---
+import { categories, getCategoryColor } from '../lib/categories';
+---
+
+<aside class="space-y-5">
+  <!-- はじめての方へ -->
+  <div class="bg-white border border-border rounded-xl p-4">
+    <a href="/about/" class="flex items-center gap-2 font-bold text-[14px] text-text mb-3">
+      <span class="text-lg">🌱</span>はじめての方へ
+    </a>
+    <p class="text-[12px] text-text-secondary mb-3">このサイトの使い方と<br/>おすすめの読み方ガイド</p>
+    <hr class="border-border mb-3" />
+    <p class="text-[13px] font-bold text-text mb-2">カテゴリ</p>
+    <div class="space-y-2">
+      {Object.entries(categories).map(([slug, cat]) => (
+        <a href={`/category/${slug}/`} class="flex items-center justify-between group">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold" style={`background-color: ${cat.color}`}>
+              {cat.name.charAt(0)}
+            </span>
+            <div>
+              <p class="text-[13px] font-medium text-text group-hover:text-accent transition-colors">{cat.name}</p>
+              <p class="text-[10px] text-text-muted leading-tight">{cat.description.slice(0, 15)}</p>
+            </div>
+          </div>
+          <span class="text-text-muted text-[12px]">&rsaquo;</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- 初心者におすすめ -->
+  <div class="bg-white border border-border rounded-xl p-4">
+    <p class="text-[13px] font-bold text-text mb-3">初心者におすすめ</p>
+    <div class="space-y-2 text-[12px]">
+      <a href="/posts/side-job-beginners-guide/" class="flex items-center gap-2 text-text-secondary hover:text-accent transition-colors">
+        <span>📖</span>副業の始め方ガイド
+      </a>
+      <a href="/posts/nisa-tsumitate-hajimete/" class="flex items-center gap-2 text-text-secondary hover:text-accent transition-colors">
+        <span>📖</span>新NISAの基礎知識
+      </a>
+      <a href="/posts/career-nenshu-koujou/" class="flex items-center gap-2 text-text-secondary hover:text-accent transition-colors">
+        <span>📖</span>年収アップの戦略
+      </a>
+    </div>
+  </div>
+
+  <!-- PR広告枠 -->
+  <div class="bg-white border border-border rounded-xl p-4">
+    <p class="text-[10px] text-text-muted mb-2">PR</p>
+    <p class="text-[15px] font-bold text-text mb-1">未経験から月5万円の<br/>副収入をつくる方法</p>
+    <p class="text-[11px] text-text-secondary mb-3">スキル不要・初期費用0円から始められる副業を厳選紹介！</p>
+    <div class="bg-bg-muted rounded-lg h-24 flex items-center justify-center mb-3">
+      <span class="text-[11px] text-text-muted">広告画像エリア</span>
+    </div>
+    <div class="bg-accent text-white text-center text-[12px] font-bold py-2 rounded-lg">
+      無料でチェックする
+    </div>
+  </div>
+
+  <!-- 人気記事ランキング -->
+  <div class="bg-white border border-border rounded-xl p-4">
+    <p class="text-[13px] font-bold text-text mb-3">人気記事ランキング</p>
+    <div class="space-y-3">
+      <a href="/posts/nisa-tsumitate-hajimete/" class="flex items-start gap-2 group">
+        <span class="w-5 h-5 rounded-full bg-amber-400 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+        <div>
+          <p class="text-[12px] text-text group-hover:text-accent transition-colors leading-snug">新NISAで失敗する人の共通点5つ</p>
+          <p class="text-[10px] text-text-muted">👁 12.5K</p>
+        </div>
+      </a>
+      <a href="/posts/side-job-beginners-guide/" class="flex items-start gap-2 group">
+        <span class="w-5 h-5 rounded-full bg-gray-400 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+        <div>
+          <p class="text-[12px] text-text group-hover:text-accent transition-colors leading-snug">副業で月3万円稼ぐ人が最初にやったこと</p>
+          <p class="text-[10px] text-text-muted">👁 9.8K</p>
+        </div>
+      </a>
+      <a href="/posts/career-nenshu-koujou/" class="flex items-start gap-2 group">
+        <span class="w-5 h-5 rounded-full bg-amber-700 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+        <div>
+          <p class="text-[12px] text-text group-hover:text-accent transition-colors leading-snug">30代の転職で年収を上げる現実的な方法</p>
+          <p class="text-[10px] text-text-muted">👁 8.7K</p>
+        </div>
+      </a>
+      <a href="/posts/ai-fukugyo-chatgpt/" class="flex items-start gap-2 group">
+        <span class="w-5 h-5 rounded-full bg-bg-muted text-text-muted text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
+        <div>
+          <p class="text-[12px] text-text group-hover:text-accent transition-colors leading-snug">AIツールを使ってブログを効率化する方法</p>
+          <p class="text-[10px] text-text-muted">👁 7.2K</p>
+        </div>
+      </a>
+      <a href="/posts/small-business-kigyo/" class="flex items-start gap-2 group">
+        <span class="w-5 h-5 rounded-full bg-bg-muted text-text-muted text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">5</span>
+        <div>
+          <p class="text-[12px] text-text group-hover:text-accent transition-colors leading-snug">起業アイデアの見つけ方と検証ステップ</p>
+          <p class="text-[10px] text-text-muted">👁 6.1K</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- メルマガ登録 -->
+  <div class="bg-white border border-border rounded-xl p-4">
+    <p class="text-[13px] font-bold text-text mb-1">メルマガ登録（無料）</p>
+    <p class="text-[11px] text-text-secondary mb-3">最新の記事やお得な情報を<br/>週1回お届けします</p>
+    <input type="email" placeholder="メールアドレスを入力" class="w-full border border-border rounded-lg px-3 py-2 text-[12px] mb-2 focus:outline-none focus:border-accent" />
+    <button class="w-full bg-accent text-white text-[12px] font-bold py-2 rounded-lg hover:opacity-90 transition-opacity">
+      登録する
+    </button>
+  </div>
+</aside>

@@ -2,278 +2,221 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ArticleCard from '../components/ArticleCard.astro';
-import { categories, getCategoryColor, getCategoryBgColor } from '../lib/categories';
-import Sidebar from '../components/Sidebar.astro';
+import LeftSidebar from '../components/LeftSidebar.astro';
+import { categories, getCategoryColor, getCategoryBgColor, getCategoryName, getCategoryImage } from '../lib/categories';
 import { SITE } from '../lib/site';
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
 const sortedPosts = allPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-const featuredPosts = sortedPosts.slice(0, 3);
-const restPosts = sortedPosts.slice(3);
+const featuredPost = sortedPosts[0];
+const sideFeaturePosts = sortedPosts.slice(1, 3);
+const recommendedPosts = sortedPosts.slice(0, 3);
+const latestPosts = sortedPosts.slice(3);
 ---
 
-<Base hideHeader>
-  <!-- Hero: 画像を丸ごと表示。クリック可能な領域を重ねる -->
-  <section class="relative">
-    <div class="mx-auto max-w-6xl">
-      <!-- 画像MAP用にposition relativeのラッパーが必要 -->
-      <div class="relative">
-        <img
-          src="/images/hero.jpg"
-          alt="副業・投資・キャリアのリアルを記録するメディア わらじ二足"
-          class="w-full h-auto block"
-          width="1536"
-          height="1024"
-          fetchpriority="high"
-          id="hero-img"
-        />
-        <!-- ロゴ上書き: 画像内の「わらじ二足」を「副業media」に差し替え -->
-        <div id="hero-logo" class="absolute flex items-center" style="background:#f8fafc;">
-          <span style="font-size:inherit; font-weight:800; color:#1a1a2e; letter-spacing:-0.02em; white-space:nowrap;">副業media</span>
-        </div>
-        <!-- リンクはJSでピクセル単位で配置する -->
-        <div id="hero-links"></div>
+<Base>
+  <div class="mx-auto max-w-7xl px-4 py-6">
+    <div class="flex flex-col lg:flex-row gap-6">
+
+      <!-- 左サイドバー -->
+      <div class="hidden lg:block w-56 shrink-0">
+        <LeftSidebar />
       </div>
-    </div>
-  </section>
 
-  <!-- ① 分岐導線: あなたはどれ？ -->
-  <section class="bg-white border-b border-border">
-    <div class="mx-auto max-w-6xl px-4 py-10">
-      <p class="text-center text-text-muted text-sm mb-2">まずはここから</p>
-      <h2 class="text-center text-xl md:text-2xl font-bold text-text mb-8">あなたが今、気になっているのは？</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
-        <a href="/category/investment/" class="group block text-center p-6 rounded-xl border-2 border-border hover:border-accent hover:shadow-md transition-all">
-          <span class="text-3xl block mb-3">💰</span>
-          <span class="text-[15px] font-bold text-text group-hover:text-accent transition-colors">副業・投資を始めたい</span>
-          <span class="block text-[12px] text-text-muted mt-1">NISA、高配当株、せどりなど</span>
-        </a>
-        <a href="/category/jobchange/" class="group block text-center p-6 rounded-xl border-2 border-border hover:border-accent hover:shadow-md transition-all">
-          <span class="text-3xl block mb-3">🔄</span>
-          <span class="text-[15px] font-bold text-text group-hover:text-accent transition-colors">転職を考えている</span>
-          <span class="block text-[12px] text-text-muted mt-1">エージェント、面接、職務経歴書</span>
-        </a>
-        <a href="/category/career/" class="group block text-center p-6 rounded-xl border-2 border-border hover:border-accent hover:shadow-md transition-all">
-          <span class="text-3xl block mb-3">📈</span>
-          <span class="text-[15px] font-bold text-text group-hover:text-accent transition-colors">年収を上げたい</span>
-          <span class="block text-[12px] text-text-muted mt-1">資格、スキルアップ、昇進戦略</span>
-        </a>
-      </div>
-    </div>
-  </section>
+      <!-- メインコンテンツ -->
+      <div class="flex-1 min-w-0">
 
-  <!-- ② 初心者導線: はじめての方へ -->
-  <section class="bg-bg-soft border-b border-border">
-    <div class="mx-auto max-w-6xl px-4 py-10">
-      <div class="max-w-3xl mx-auto">
-        <p class="text-accent text-sm font-bold mb-1">はじめての方へ</p>
-        <h2 class="text-lg font-bold text-text mb-5">迷ったら、まずこの3本から読んでください</h2>
-        <div class="space-y-3">
-          <a href="/posts/side-job-beginners-guide/" class="flex items-center gap-4 bg-white p-4 rounded-xl border border-border hover:border-accent/30 hover:shadow-sm transition-all group">
-            <span class="text-2xl shrink-0">1</span>
-            <div>
-              <p class="font-bold text-[14px] text-text group-hover:text-accent transition-colors">副業を始める前に最低限やっておくべき5つの準備</p>
-              <p class="text-[12px] text-text-muted mt-0.5">就業規則、確定申告、時間管理。ここを飛ばすと後で痛い目に合います</p>
-            </div>
-          </a>
-          <a href="/posts/nisa-tsumitate-hajimete/" class="flex items-center gap-4 bg-white p-4 rounded-xl border border-border hover:border-accent/30 hover:shadow-sm transition-all group">
-            <span class="text-2xl shrink-0">2</span>
-            <div>
-              <p class="font-bold text-[14px] text-text group-hover:text-accent transition-colors">新NISAのつみたて投資枠、初心者が選ぶべきファンドはこの3本</p>
-              <p class="text-[12px] text-text-muted mt-0.5">オルカン vs S&P500。結論と理由をシンプルにまとめました</p>
-            </div>
-          </a>
-          <a href="/posts/career-nenshu-koujou/" class="flex items-center gap-4 bg-white p-4 rounded-xl border border-border hover:border-accent/30 hover:shadow-sm transition-all group">
-            <span class="text-2xl shrink-0">3</span>
-            <div>
-              <p class="font-bold text-[14px] text-text group-hover:text-accent transition-colors">30代で年収100万円アップは可能か？5つの方法を比較した結果</p>
-              <p class="text-[12px] text-text-muted mt-0.5">転職、副業、資格、昇進。どれが一番現実的か</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 記事一覧 + サイドバー -->
-  <div id="articles" class="mx-auto max-w-7xl px-4 scroll-mt-4">
-    <div class="flex flex-col lg:flex-row gap-8">
-    <div class="flex-1 min-w-0">
-    {featuredPosts.length > 0 && (
-      <section class="py-8">
-        <h2 class="text-sm font-bold text-text-muted uppercase tracking-wider mb-5">Pick Up</h2>
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredPosts.map((post, i) => (
-            <ArticleCard
-              title={post.data.title}
-              description={post.data.description}
-              pubDate={post.data.pubDate}
-              category={post.data.category}
-              slug={post.id}
-              featured
-              index={i}
-            />
-          ))}
-        </div>
-      </section>
-    )}
-
-    <hr class="border-border" />
-
-    <section class="py-8">
-      <h2 class="text-sm font-bold text-text-muted uppercase tracking-wider mb-5">All Articles</h2>
-      {restPosts.length === 0 ? (
-        <p class="text-text-secondary">まだ他の記事がありません。</p>
-      ) : (
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {restPosts.map((post, i) => (
-            <ArticleCard
-              title={post.data.title}
-              description={post.data.description}
-              pubDate={post.data.pubDate}
-              category={post.data.category}
-              slug={post.id}
-              index={i + 1}
-            />
-          ))}
-        </div>
-      )}
-    </section>
-
-    {Object.entries(categories).map(([slug, cat]) => {
-      const catPosts = sortedPosts.filter(p => p.data.category === slug).slice(0, 3);
-      if (catPosts.length === 0) return null;
-      return (
-        <>
-          <hr class="border-border" />
-          <section class="py-8">
-            <div class="flex items-center justify-between mb-5">
-              <h2 class="text-sm font-bold uppercase tracking-wider" style={`color: ${cat.color}`}>
-                {cat.name}
-              </h2>
-              <a href={`/category/${slug}/`} class="text-[13px] text-text-muted hover:text-accent transition-colors">
-                すべて見る &rarr;
+        <!-- FV: 注目記事（大）+ 右に小カード2枚 -->
+        <section class="mb-8">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- 注目記事（大） -->
+            <div class="md:col-span-2">
+              <a href={`/posts/${featuredPost.id}/`} class="block group relative rounded-xl overflow-hidden aspect-[16/10]">
+                <img
+                  src={getCategoryImage(featuredPost.data.category)}
+                  alt=""
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div class="absolute top-4 left-4">
+                  <span class="bg-accent text-white text-[11px] font-bold px-2.5 py-1 rounded">注目記事</span>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 p-5">
+                  <h2 class="text-white text-lg md:text-xl font-bold leading-snug mb-2">
+                    {featuredPost.data.title}
+                  </h2>
+                  <p class="text-white/80 text-[13px] line-clamp-2 mb-3">
+                    {featuredPost.data.description}
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <span class="text-white/60 text-[12px]">
+                      {featuredPost.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                    </span>
+                    <span
+                      class="text-[10px] font-bold px-2 py-0.5 rounded"
+                      style={`color: ${getCategoryColor(featuredPost.data.category)}; background-color: ${getCategoryBgColor(featuredPost.data.category)}`}
+                    >
+                      {getCategoryName(featuredPost.data.category)}
+                    </span>
+                  </div>
+                </div>
               </a>
             </div>
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {catPosts.map((post, i) => (
-                <ArticleCard
-                  title={post.data.title}
-                  description={post.data.description}
-                  pubDate={post.data.pubDate}
-                  category={post.data.category}
-                  slug={post.id}
-                  index={i}
-                />
+
+            <!-- 右に小カード2枚 -->
+            <div class="flex flex-col gap-4">
+              {sideFeaturePosts.map((post) => (
+                <a href={`/posts/${post.id}/`} class="group relative rounded-xl overflow-hidden aspect-[16/9] flex-1">
+                  <img
+                    src={getCategoryImage(post.data.category, 1)}
+                    alt=""
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                  <div class="absolute top-2 left-2">
+                    <span
+                      class="text-[10px] font-bold px-2 py-0.5 rounded"
+                      style={`color: white; background-color: ${getCategoryColor(post.data.category)}`}
+                    >
+                      {getCategoryName(post.data.category)}
+                    </span>
+                  </div>
+                  <div class="absolute bottom-0 left-0 right-0 p-3">
+                    <h3 class="text-white text-[13px] font-bold leading-snug line-clamp-2">
+                      {post.data.title}
+                    </h3>
+                    <p class="text-white/60 text-[11px] mt-1">
+                      {post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                    </p>
+                  </div>
+                </a>
               ))}
             </div>
-          </section>
-        </>
-      );
-    })}
+          </div>
+        </section>
 
-    <!-- ④ さりげないCTA -->
-    <section class="py-12">
-      <div class="max-w-2xl mx-auto text-center">
-        <p class="text-text-muted text-sm mb-2">全記事を探す</p>
-        <h2 class="text-lg font-bold text-text mb-4">ジャンル別に記事をまとめています</h2>
-        <div class="flex flex-wrap justify-center gap-2">
-          {Object.entries(categories).map(([slug, cat]) => (
-            <a
-              href={`/category/${slug}/`}
-              class="text-[13px] font-medium px-4 py-2 rounded-full border border-border hover:border-accent hover:text-accent transition-all"
-              style={`color: ${cat.color}`}
-            >
-              {cat.name}の記事一覧
-            </a>
-          ))}
-        </div>
-        <a href="/about/" class="inline-block mt-6 text-[13px] text-text-muted hover:text-accent transition-colors">
-          このサイトについて &rarr;
-        </a>
-      </div>
-    </section>
-    </div><!-- /flex-1 -->
+        <!-- バリュープロポジション -->
+        <section class="mb-8">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="bg-white border border-border rounded-xl p-4 text-center">
+              <span class="text-2xl block mb-2">📝</span>
+              <p class="text-[13px] font-bold text-text mb-1">リアルな体験記録</p>
+              <p class="text-[11px] text-text-muted leading-snug">実際にやってみたことだけを正直に発信します</p>
+            </div>
+            <div class="bg-white border border-border rounded-xl p-4 text-center">
+              <span class="text-2xl block mb-2">🔰</span>
+              <p class="text-[13px] font-bold text-text mb-1">初心者目線</p>
+              <p class="text-[11px] text-text-muted leading-snug">難しいことをわかりやすく、つまずきやすい部分も解説</p>
+            </div>
+            <div class="bg-white border border-border rounded-xl p-4 text-center">
+              <span class="text-2xl block mb-2">🚀</span>
+              <p class="text-[13px] font-bold text-text mb-1">行動につながる</p>
+              <p class="text-[11px] text-text-muted leading-snug">読むだけで終わらず、次の一歩を踏み出せる内容を</p>
+            </div>
+            <div class="bg-white border border-border rounded-xl p-4 text-center">
+              <span class="text-2xl block mb-2">⚖️</span>
+              <p class="text-[13px] font-bold text-text mb-1">中立・客観的</p>
+              <p class="text-[11px] text-text-muted leading-snug">特定のサービスに偏らず、本当に良いものを紹介</p>
+            </div>
+          </div>
+        </section>
 
-    <!-- サイドバー（PCのみ） -->
-    <div class="hidden lg:block w-72 shrink-0 pt-8">
-      <Sidebar />
+        <!-- まず読むべきおすすめ記事 -->
+        <section id="popular" class="mb-8">
+          <div class="flex items-center justify-between mb-5">
+            <h2 class="text-[16px] font-bold text-text">まず読むべきおすすめ記事</h2>
+            <a href="/search/" class="text-[12px] text-text-muted hover:text-accent transition-colors">もっと見る</a>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {recommendedPosts.map((post, i) => (
+              <ArticleCard
+                title={post.data.title}
+                description={post.data.description}
+                pubDate={post.data.pubDate}
+                category={post.data.category}
+                slug={post.id}
+                index={i}
+              />
+            ))}
+          </div>
+        </section>
+
+        <!-- 新着記事 -->
+        <section id="latest" class="mb-8">
+          <div class="flex items-center justify-between mb-5">
+            <h2 class="text-[16px] font-bold text-text">新着記事</h2>
+            <a href="/search/" class="text-[12px] text-text-muted hover:text-accent transition-colors">もっと見る</a>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {latestPosts.slice(0, 9).map((post, i) => (
+              <ArticleCard
+                title={post.data.title}
+                description={post.data.description}
+                pubDate={post.data.pubDate}
+                category={post.data.category}
+                slug={post.id}
+                index={i + 1}
+              />
+            ))}
+          </div>
+        </section>
+
+        <!-- カテゴリ別セクション -->
+        {Object.entries(categories).map(([slug, cat]) => {
+          const catPosts = sortedPosts.filter(p => p.data.category === slug).slice(0, 3);
+          if (catPosts.length === 0) return null;
+          return (
+            <section class="mb-8">
+              <div class="flex items-center justify-between mb-5">
+                <h2 class="text-[16px] font-bold flex items-center gap-2" style={`color: ${cat.color}`}>
+                  <span class="w-1.5 h-5 rounded-full" style={`background-color: ${cat.color}`}></span>
+                  {cat.name}
+                </h2>
+                <a href={`/category/${slug}/`} class="text-[12px] text-text-muted hover:text-accent transition-colors">
+                  もっと見る
+                </a>
+              </div>
+              <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+                {catPosts.map((post, i) => (
+                  <ArticleCard
+                    title={post.data.title}
+                    description={post.data.description}
+                    pubDate={post.data.pubDate}
+                    category={post.data.category}
+                    slug={post.id}
+                    index={i}
+                  />
+                ))}
+              </div>
+            </section>
+          );
+        })}
+
+        <!-- 下部PR -->
+        <section class="mb-8">
+          <div class="bg-gradient-to-r from-blue-50 to-green-50 border border-border rounded-xl p-6 flex flex-col md:flex-row items-center gap-6">
+            <div class="flex-1">
+              <span class="text-[10px] font-bold text-accent bg-accent/10 px-2 py-0.5 rounded mb-2 inline-block">PR</span>
+              <h3 class="text-[17px] font-bold text-text mb-2">未経験からでも始められる<br/>おすすめ副業を厳選！</h3>
+              <p class="text-[12px] text-text-secondary mb-4">実際に月3万円以上稼げた方法だけをまとめました。あなたに合った副業がきっと見つかります。</p>
+              <span class="inline-block bg-accent text-white text-[13px] font-bold px-5 py-2.5 rounded-lg">
+                無料で詳細をチェック &rsaquo;
+              </span>
+            </div>
+            <div class="w-48 h-32 bg-white/50 rounded-xl flex items-center justify-center text-text-muted text-[12px]">
+              広告画像エリア
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /メインコンテンツ -->
+
     </div>
-
-    </div><!-- /flex row -->
   </div>
 </Base>
 
 <script is:inline>
-// 画像の元サイズに対するピクセル座標でリンクを定義
-// 元画像: 1536 x 1024
-var LINKS = [
-  // ヘッダーナビ
-  { x: 32, y: 18, w: 180, h: 55, href: '/', label: 'トップ' },
-  { x: 710, y: 17, w: 100, h: 55, href: '/category/investment/', label: '投資' },
-  { x: 834, y: 18, w: 115, h: 55, href: '/category/ai/', label: 'AI副業' },
-  { x: 983, y: 18, w: 85, h: 55, href: '/category/entrepreneur/', label: '起業' },
-  { x: 1112, y: 19, w: 85, h: 55, href: '/category/jobchange/', label: '転職' },
-  { x: 1234, y: 18, w: 165, h: 55, href: '/category/career/', label: 'キャリアアップ' },
-  { x: 1411, y: 18, w: 110, h: 55, href: '/about/', label: 'About' },
-
-  // CTAボタン
-  { x: 74, y: 461, w: 440, h: 60, href: '#articles', label: '記事を見る' },
-
-  // カテゴリカード5つ
-  { x: 74, y: 568, w: 275, h: 170, href: '/category/investment/', label: '投資' },
-  { x: 355, y: 565, w: 275, h: 170, href: '/category/ai/', label: 'AI副業' },
-  { x: 637, y: 568, w: 275, h: 170, href: '/category/entrepreneur/', label: '起業' },
-  { x: 915, y: 569, w: 275, h: 170, href: '/category/jobchange/', label: '転職' },
-  { x: 1197, y: 568, w: 275, h: 170, href: '/category/career/', label: 'キャリアアップ' },
-
-  // このサイトについて
-  { x: 43, y: 747, w: 1476, h: 290, href: '/about/', label: 'このサイトについて' },
-];
-
-function placeLinks() {
-  var img = document.getElementById('hero-img');
-  var container = document.getElementById('hero-links');
-  if (!img || !container) return;
-
-  var displayW = img.clientWidth;
-  var displayH = img.clientHeight;
-  var origW = 1536;
-  var origH = 1024;
-  var scaleX = displayW / origW;
-  var scaleY = displayH / origH;
-
-  // ロゴ上書きの位置とサイズを合わせる
-  var logo = document.getElementById('hero-logo');
-  if (logo) {
-    logo.style.left = (32 * scaleX) + 'px';
-    logo.style.top = (18 * scaleY) + 'px';
-    logo.style.width = (180 * scaleX) + 'px';
-    logo.style.height = (55 * scaleY) + 'px';
-    logo.style.fontSize = (28 * scaleX) + 'px';
-    logo.style.paddingLeft = (6 * scaleX) + 'px';
-  }
-
-  container.innerHTML = '';
-
-  for (var i = 0; i < LINKS.length; i++) {
-    var link = LINKS[i];
-    var a = document.createElement('a');
-    a.href = link.href;
-    a.setAttribute('aria-label', link.label);
-    a.style.position = 'absolute';
-    a.style.left = (link.x * scaleX) + 'px';
-    a.style.top = (link.y * scaleY) + 'px';
-    a.style.width = (link.w * scaleX) + 'px';
-    a.style.height = (link.h * scaleY) + 'px';
-    a.style.cursor = 'pointer';
-    // 本番: 透明リンク
-    container.appendChild(a);
-  }
-}
-
-window.addEventListener('load', placeLinks);
-window.addEventListener('resize', placeLinks);
+// ヒーロー画像のリンクは不要（トップページのFVは新デザイン）
 </script>

@@ -3,33 +3,43 @@ import { SITE } from '../lib/site';
 import { categories } from '../lib/categories';
 ---
 
-<footer class="bg-white border-t border-border mt-16">
-  <div class="mx-auto max-w-6xl px-4 py-10">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+<footer class="bg-primary text-white/70 mt-16">
+  <div class="mx-auto max-w-7xl px-4 py-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
       <div>
-        <p class="font-bold text-text mb-2">{SITE.title}</p>
-        <p class="text-sm text-text-secondary leading-relaxed">{SITE.description}</p>
+        <p class="text-white font-bold text-lg mb-2">{SITE.title}</p>
+        <p class="text-[12px] leading-relaxed">副業・投資・キャリアのリアルを記録するメディア。<br/>あなたの「新しい一歩」を応援します。</p>
       </div>
       <div>
-        <p class="font-medium text-text text-sm mb-3">カテゴリ</p>
-        <ul class="space-y-2 text-sm text-text-secondary">
+        <p class="text-white font-medium text-sm mb-3">カテゴリ</p>
+        <ul class="space-y-1.5 text-[12px]">
           {Object.entries(categories).map(([slug, cat]) => (
-            <li><a href={`/category/${slug}/`} class="hover:text-accent transition-colors">{cat.name}</a></li>
+            <li><a href={`/category/${slug}/`} class="hover:text-white transition-colors">{cat.name}</a></li>
           ))}
         </ul>
       </div>
       <div>
-        <p class="font-medium text-text text-sm mb-3">リンク</p>
-        <ul class="space-y-2 text-sm text-text-secondary">
-          <li><a href="/about/" class="hover:text-accent transition-colors">このサイトについて</a></li>
-          <li><a href="/search/" class="hover:text-accent transition-colors">記事を検索</a></li>
-          <li><a href="/rss.xml" class="hover:text-accent transition-colors">RSS</a></li>
+        <p class="text-white font-medium text-sm mb-3">運営者情報</p>
+        <ul class="space-y-1.5 text-[12px]">
+          <li><a href="/about/" class="hover:text-white transition-colors">運営者について</a></li>
+          <li><a href="/about/" class="hover:text-white transition-colors">プライバシーポリシー</a></li>
+          <li><a href="/about/" class="hover:text-white transition-colors">お問い合わせ</a></li>
+          <li><a href="/sitemap-index.xml" class="hover:text-white transition-colors">サイトマップ</a></li>
         </ul>
       </div>
+      <div>
+        <p class="text-white font-medium text-sm mb-3">Follow Us</p>
+        <div class="flex gap-3">
+          <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[13px] hover:bg-white/20 transition-colors cursor-pointer">X</span>
+          <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[13px] hover:bg-white/20 transition-colors cursor-pointer">IG</span>
+          <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[13px] hover:bg-white/20 transition-colors cursor-pointer">YT</span>
+          <a href="/rss.xml" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[13px] hover:bg-white/20 transition-colors">RSS</a>
+        </div>
+      </div>
     </div>
-    <div class="border-t border-border pt-6 text-center text-xs text-text-muted">
+    <div class="border-t border-white/10 pt-6 text-center text-[11px] text-white/40">
       <p class="mb-2">当サイトの情報は個人の調査に基づくものであり、特定の投資や副業を推奨するものではありません。</p>
-      &copy; {new Date().getFullYear()} {SITE.title}
+      &copy; {new Date().getFullYear()} {SITE.title}. All Rights Reserved.
     </div>
   </div>
 </footer>
