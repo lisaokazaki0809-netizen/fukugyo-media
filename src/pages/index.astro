@@ -28,53 +28,78 @@ const latestPosts = sortedPosts.slice(3);
       <!-- メインコンテンツ -->
       <div class="flex-1 min-w-0">
 
-        <!-- FV: 注目記事（大）+ 右に小カード2枚 -->
+        <!-- FV: 刺さるコピー + 選択肢 -->
+        <section class="mb-6 bg-gradient-to-br from-primary to-primary-light rounded-2xl p-6 md:p-8 text-white relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div class="relative">
+            <p class="text-white/60 text-[12px] font-medium mb-2">副業・投資・キャリアのリアルな情報メディア</p>
+            <h1 class="text-xl md:text-2xl font-bold leading-tight mb-3">
+              何から始めればいいか<br/>分からない人へ。
+            </h1>
+            <p class="text-white/70 text-[13px] leading-relaxed mb-5 max-w-md">
+              煽らない。盛らない。30代会社員が実際に調べて、比較して、考えた記録だけを正直に発信しています。
+            </p>
+            <p class="text-white/50 text-[11px] font-bold uppercase tracking-wider mb-3">あなたが今、気になっているのは？</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <a href="/category/investment/" class="bg-white/15 hover:bg-white/25 text-white text-[12px] font-medium px-4 py-2 rounded-full transition-colors border border-white/20">
+                💰 副業・投資を始めたい
+              </a>
+              <a href="/category/jobchange/" class="bg-white/15 hover:bg-white/25 text-white text-[12px] font-medium px-4 py-2 rounded-full transition-colors border border-white/20">
+                🔄 転職を考えている
+              </a>
+              <a href="/category/career/" class="bg-white/15 hover:bg-white/25 text-white text-[12px] font-medium px-4 py-2 rounded-full transition-colors border border-white/20">
+                📈 年収を上げたい
+              </a>
+            </div>
+            <a href="/posts/side-job-beginners-guide/" class="inline-flex items-center gap-2 bg-white text-primary text-[13px] font-bold px-5 py-2.5 rounded-lg hover:shadow-lg transition-shadow">
+              初心者ガイドを読む &rsaquo;
+            </a>
+          </div>
+        </section>
+
+        <!-- 注目記事（主役。大きく・濃く・影つき） -->
         <section class="mb-8">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <!-- 注目記事（大） -->
             <div class="md:col-span-2">
-              <a href={`/posts/${featuredPost.id}/`} class="block group relative rounded-xl overflow-hidden aspect-[16/10]">
+              <a href={`/posts/${featuredPost.id}/`} class="block group relative rounded-2xl overflow-hidden aspect-[16/10] shadow-xl ring-1 ring-black/5">
                 <img
                   src={getFeaturedHeroImage()}
                   alt=""
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10"></div>
                 <div class="absolute top-4 left-4">
-                  <span class="bg-accent text-white text-[11px] font-bold px-2.5 py-1 rounded">注目記事</span>
+                  <span class="bg-red-500 text-white text-[11px] font-bold px-3 py-1 rounded-full animate-pulse">🔥 注目</span>
                 </div>
-                <div class="absolute bottom-0 left-0 right-0 p-5">
+                <div class="absolute bottom-0 left-0 right-0 p-5 md:p-6">
+                  <span
+                    class="text-[10px] font-bold px-2 py-0.5 rounded mb-2 inline-block"
+                    style={`color: white; background-color: ${getCategoryColor(featuredPost.data.category)}`}
+                  >
+                    {getCategoryName(featuredPost.data.category)}
+                  </span>
                   <h2 class="text-white text-lg md:text-xl font-bold leading-snug mb-2">
                     {featuredPost.data.title}
                   </h2>
-                  <p class="text-white/80 text-[13px] line-clamp-2 mb-3">
+                  <p class="text-white/75 text-[13px] line-clamp-2 mb-3">
                     {featuredPost.data.description}
                   </p>
-                  <div class="flex items-center gap-2">
-                    <span class="text-white/60 text-[12px]">
-                      {featuredPost.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
-                    </span>
-                    <span
-                      class="text-[10px] font-bold px-2 py-0.5 rounded"
-                      style={`color: ${getCategoryColor(featuredPost.data.category)}; background-color: ${getCategoryBgColor(featuredPost.data.category)}`}
-                    >
-                      {getCategoryName(featuredPost.data.category)}
-                    </span>
-                  </div>
+                  <span class="text-white/50 text-[12px]">
+                    {featuredPost.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                  </span>
                 </div>
               </a>
             </div>
 
-            <!-- 右に小カード2枚 -->
             <div class="flex flex-col gap-4">
               {sideFeaturePosts.map((post) => (
-                <a href={`/posts/${post.id}/`} class="group relative rounded-xl overflow-hidden aspect-[16/9] flex-1">
+                <a href={`/posts/${post.id}/`} class="group relative rounded-xl overflow-hidden aspect-[16/9] flex-1 shadow-md ring-1 ring-black/5">
                   <img
                     src={getCategoryImage(post.data.category, 1)}
                     alt=""
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent"></div>
                   <div class="absolute top-2 left-2">
                     <span
                       class="text-[10px] font-bold px-2 py-0.5 rounded"
@@ -87,7 +112,7 @@ const latestPosts = sortedPosts.slice(3);
                     <h3 class="text-white text-[13px] font-bold leading-snug line-clamp-2">
                       {post.data.title}
                     </h3>
-                    <p class="text-white/60 text-[11px] mt-1">
+                    <p class="text-white/50 text-[11px] mt-1">
                       {post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
                     </p>
                   </div>
