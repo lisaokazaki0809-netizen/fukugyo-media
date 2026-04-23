@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="お問い合わせ" description="副業mediaへのお問い合わせはこちら。">
+  <article class="mx-auto max-w-2xl px-4 py-10">
+    <h1 class="text-2xl font-bold text-text mb-3">お問い合わせ</h1>
+    <p class="text-[14px] text-text-secondary mb-8">記事の内容に関するご質問、掲載依頼、その他のお問い合わせはこちらからお送りください。</p>
+
+    <form action="https://formspree.io/f/placeholder" method="POST" class="space-y-5">
+      <div>
+        <label for="name" class="block text-[13px] font-medium text-text mb-1.5">お名前</label>
+        <input type="text" id="name" name="name" required class="w-full border border-border rounded-lg px-4 py-2.5 text-[14px] focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" placeholder="山田 太郎" />
+      </div>
+      <div>
+        <label for="email" class="block text-[13px] font-medium text-text mb-1.5">メールアドレス</label>
+        <input type="email" id="email" name="email" required class="w-full border border-border rounded-lg px-4 py-2.5 text-[14px] focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" placeholder="example@email.com" />
+      </div>
+      <div>
+        <label for="subject" class="block text-[13px] font-medium text-text mb-1.5">件名</label>
+        <select id="subject" name="subject" class="w-full border border-border rounded-lg px-4 py-2.5 text-[14px] focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors bg-white">
+          <option value="">選択してください</option>
+          <option value="記事について">記事の内容について</option>
+          <option value="掲載依頼">掲載・広告の依頼</option>
+          <option value="不具合報告">サイトの不具合報告</option>
+          <option value="その他">その他</option>
+        </select>
+      </div>
+      <div>
+        <label for="message" class="block text-[13px] font-medium text-text mb-1.5">メッセージ</label>
+        <textarea id="message" name="message" rows="5" required class="w-full border border-border rounded-lg px-4 py-2.5 text-[14px] focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors resize-y" placeholder="お問い合わせ内容をご記入ください"></textarea>
+      </div>
+      <button type="submit" class="bg-accent text-white text-[14px] font-bold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity">
+        送信する
+      </button>
+    </form>
+
+    <p class="text-[12px] text-text-muted mt-6">※ 返信まで数日いただく場合があります。</p>
+  </article>
+</Base>

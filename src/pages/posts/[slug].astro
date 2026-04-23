@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import LeftSidebar from '../../components/LeftSidebar.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
 import { getCategoryName, getCategoryColor, getCategoryBgColor, getCategoryImage } from '../../lib/categories';
 import { SITE } from '../../lib/site';
 
@@ -26,6 +27,15 @@ const formattedDate = post.data.pubDate.toLocaleDateString('ja-JP', {
 const catColor = getCategoryColor(post.data.category);
 const catBgColor = getCategoryBgColor(post.data.category);
 const catImage = getCategoryImage(post.data.category);
+
+// 読了時間の計算（日本語は1分400文字で計算）
+const body = post.body || '';
+const charCount = body.length;
+const readingTime = Math.max(1, Math.ceil(charCount / 400));
+
+// シェアURL
+const shareUrl = new URL(`/posts/${post.id}/`, SITE.url).toString();
+const shareText = encodeURIComponent(post.data.title);
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
 const relatedPosts = allPosts
@@ -85,17 +95,33 @@ const articleSchema = {
           <time datetime={post.data.pubDate.toISOString()} class="text-[13px] text-text-muted">
             {formattedDate}
           </time>
+          <span class="text-[12px] text-text-muted flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            {readingTime}分で読める
+          </span>
         </div>
 
         <!-- Title -->
-        <h1 class="text-2xl md:text-[1.75rem] font-bold text-text leading-tight mb-8">
+        <h1 class="text-2xl md:text-[1.75rem] font-bold text-text leading-tight mb-6">
           {post.data.title}
         </h1>
 
+        <!-- SNSシェアボタン -->
+        <div class="flex items-center gap-2 mb-6">
+          <span class="text-[11px] text-text-muted mr-1">Share:</span>
+          <a href={`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-bg-muted hover:bg-black hover:text-white flex items-center justify-center text-[12px] text-text-secondary transition-colors font-bold">X</a>
+          <a href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-bg-muted hover:bg-blue-600 hover:text-white flex items-center justify-center text-[11px] text-text-secondary transition-colors font-bold">f</a>
+          <a href={`https://b.hatena.ne.jp/entry/${shareUrl}`} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-bg-muted hover:bg-sky-400 hover:text-white flex items-center justify-center text-[11px] text-text-secondary transition-colors font-bold">B!</a>
+          <a href={`https://social-plugins.line.me/lineit/share?url=${shareUrl}`} target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-bg-muted hover:bg-green-500 hover:text-white flex items-center justify-center text-[11px] text-text-secondary transition-colors font-bold">L</a>
+        </div>
+
         <!-- Description card -->
-        <div class="bg-bg-muted rounded-xl p-4 mb-8 text-[14px] text-text-secondary leading-relaxed">
+        <div class="bg-bg-muted rounded-xl p-4 mb-6 text-[14px] text-text-secondary leading-relaxed">
           {post.data.description}
         </div>
+
+        <!-- 目次 -->
+        <TableOfContents />
 
         <!-- Body -->
         <div class="prose">
@@ -117,6 +143,17 @@ const articleSchema = {
             </div>
           </div>
         )}
+
+        <!-- 記事末シェアボタン -->
+        <div class="mt-10 pt-6 border-t border-border">
+          <p class="text-[12px] text-text-muted mb-3">この記事が役に立ったらシェア</p>
+          <div class="flex items-center gap-2">
+            <a href={`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`} target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-2.5 rounded-lg bg-black text-white text-[12px] font-bold hover:opacity-80 transition-opacity">X でポスト</a>
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-2.5 rounded-lg bg-blue-600 text-white text-[12px] font-bold hover:opacity-80 transition-opacity">Facebook</a>
+            <a href={`https://b.hatena.ne.jp/entry/${shareUrl}`} target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-2.5 rounded-lg bg-sky-400 text-white text-[12px] font-bold hover:opacity-80 transition-opacity">はてブ</a>
+            <a href={`https://social-plugins.line.me/lineit/share?url=${shareUrl}`} target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-2.5 rounded-lg bg-green-500 text-white text-[12px] font-bold hover:opacity-80 transition-opacity">LINE</a>
+          </div>
+        </div>
 
         <!-- Related posts -->
         {relatedPosts.length > 0 && (
