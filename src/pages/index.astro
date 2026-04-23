@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import LeftSidebar from '../components/LeftSidebar.astro';
-import { categories, getCategoryColor, getCategoryBgColor, getCategoryName, getCategoryImage } from '../lib/categories';
+import { categories, getCategoryColor, getCategoryBgColor, getCategoryName, getCategoryImage, getFeaturedHeroImage } from '../lib/categories';
 import { SITE } from '../lib/site';
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
@@ -35,7 +35,7 @@ const latestPosts = sortedPosts.slice(3);
             <div class="md:col-span-2">
               <a href={`/posts/${featuredPost.id}/`} class="block group relative rounded-xl overflow-hidden aspect-[16/10]">
                 <img
-                  src={getCategoryImage(featuredPost.data.category)}
+                  src={getFeaturedHeroImage()}
                   alt=""
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
