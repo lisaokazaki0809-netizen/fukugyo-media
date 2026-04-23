@@ -28,74 +28,78 @@ const latestPosts = sortedPosts.slice(3);
       <!-- メインコンテンツ -->
       <div class="flex-1 min-w-0">
 
-        <!-- FV: 刺さるコピー + 選択肢 -->
-        <section class="mb-6 bg-gradient-to-br from-primary to-primary-light rounded-2xl p-6 md:p-8 text-white relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-          <div class="relative">
-            <h1 class="text-xl md:text-2xl font-bold leading-tight mb-3">
-              これから先のこと、<br/>ちゃんと考えてる？
-            </h1>
-            <p class="text-white/70 text-[13px] leading-relaxed mb-5 max-w-md">
-              副業、投資、転職。気になってるけど動けていないなら、まずここから。30代会社員が実際に調べて、比較して、考えた記録です。
-            </p>
-            <p class="text-white/50 text-[11px] font-bold uppercase tracking-wider mb-3">あなたが今、気になっているのは？</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <a href="/category/investment/" class="bg-white/15 hover:bg-white/25 text-white text-[12px] font-medium px-4 py-2 rounded-full transition-colors border border-white/20">
-                💰 副業・投資を始めたい
-              </a>
-              <a href="/category/jobchange/" class="bg-white/15 hover:bg-white/25 text-white text-[12px] font-medium px-4 py-2 rounded-full transition-colors border border-white/20">
-                🔄 転職を考えている
-              </a>
-              <a href="/category/career/" class="bg-white/15 hover:bg-white/25 text-white text-[12px] font-medium px-4 py-2 rounded-full transition-colors border border-white/20">
-                📈 年収を上げたい
+        <!-- FV: 人ベース。写真+感情コピー -->
+        <section class="mb-6 relative rounded-2xl overflow-hidden">
+          <img
+            src={getFeaturedHeroImage()}
+            alt=""
+            class="w-full h-auto min-h-[280px] object-cover"
+            fetchpriority="high"
+          />
+          <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-transparent"></div>
+          <div class="absolute inset-0 flex items-center">
+            <div class="p-6 md:p-8 max-w-md">
+              <h1 class="text-xl md:text-[1.65rem] font-bold text-white leading-tight mb-3">
+                このままでいいのかな、<br/>って思うことがある。
+              </h1>
+              <p class="text-white/60 text-[13px] leading-relaxed mb-5">
+                副業、投資、転職。気になってるけど動けていない。そんな30代のための、リアルな情報メディア。
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <a href="/category/investment/" class="bg-white/15 hover:bg-white/30 text-white text-[12px] font-medium px-4 py-2 rounded-full transition-colors border border-white/20 backdrop-blur-sm">
+                  副業・投資を始めたい
+                </a>
+                <a href="/category/jobchange/" class="bg-white/15 hover:bg-white/30 text-white text-[12px] font-medium px-4 py-2 rounded-full transition-colors border border-white/20 backdrop-blur-sm">
+                  転職を考えている
+                </a>
+                <a href="/category/career/" class="bg-white/15 hover:bg-white/30 text-white text-[12px] font-medium px-4 py-2 rounded-full transition-colors border border-white/20 backdrop-blur-sm">
+                  年収を上げたい
+                </a>
+              </div>
+              <a href="/posts/side-job-beginners-guide/" class="inline-flex items-center gap-2 bg-white text-primary text-[13px] font-bold px-5 py-2.5 rounded-lg hover:shadow-lg transition-all hover:translate-x-0.5">
+                はじめての方はこちら &rsaquo;
               </a>
             </div>
-            <a href="/posts/side-job-beginners-guide/" class="inline-flex items-center gap-2 bg-white text-primary text-[13px] font-bold px-5 py-2.5 rounded-lg hover:shadow-lg transition-shadow">
-              初心者ガイドを読む &rsaquo;
-            </a>
           </div>
         </section>
 
-        <!-- ▼ 特集：注目記事（主役。フル幅・大きく・濃く） -->
+        <!-- ▼ 特集：主役記事（圧倒的に目立つ） -->
         <section class="mb-6">
-          <p class="text-[11px] font-bold text-red-500 uppercase tracking-wider mb-3">&#9632; TODAY'S PICK</p>
-          <a href={`/posts/${featuredPost.id}/`} class="block group relative rounded-2xl overflow-hidden aspect-[16/7] shadow-2xl ring-1 ring-black/10">
-            <img
-              src={getFeaturedHeroImage()}
-              alt=""
-              class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/5"></div>
-            <div class="absolute top-4 left-5">
-              <span class="bg-red-500 text-white text-[11px] font-bold px-3 py-1 rounded-full">特集</span>
+          <a href={`/posts/${featuredPost.id}/`} class="block group relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/10">
+            <div class="aspect-[16/7]">
+              <img
+                src={getCategoryImage(featuredPost.data.category)}
+                alt=""
+                class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
+              />
             </div>
-            <div class="absolute bottom-0 left-0 right-0 p-5 md:p-7">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5"></div>
+            <div class="absolute top-4 left-5 flex items-center gap-2">
+              <span class="bg-red-500 text-white text-[12px] font-bold px-3 py-1.5 rounded-lg shadow-lg">🔥 今週の特集</span>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
               <span
-                class="text-[10px] font-bold px-2.5 py-1 rounded mb-3 inline-block"
+                class="text-[11px] font-bold px-3 py-1 rounded-lg mb-3 inline-block"
                 style={`color: white; background-color: ${getCategoryColor(featuredPost.data.category)}`}
               >
                 {getCategoryName(featuredPost.data.category)}
               </span>
-              <h2 class="text-white text-xl md:text-2xl font-bold leading-tight mb-2 max-w-xl">
+              <h2 class="text-white text-xl md:text-[1.75rem] font-bold leading-tight mb-3 max-w-xl drop-shadow-lg">
                 {featuredPost.data.title}
               </h2>
-              <p class="text-white/70 text-[13px] line-clamp-2 mb-3 max-w-lg">
+              <p class="text-white/70 text-[14px] line-clamp-2 mb-4 max-w-lg">
                 {featuredPost.data.description}
               </p>
-              <div class="flex items-center gap-3">
-                <span class="text-white/40 text-[12px]">
-                  {featuredPost.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
-                </span>
-                <span class="bg-white/20 text-white text-[11px] px-3 py-1 rounded-full">
-                  続きを読む &rsaquo;
-                </span>
-              </div>
+              <span class="inline-flex items-center gap-2 bg-white text-primary text-[13px] font-bold px-5 py-2.5 rounded-lg shadow-md group-hover:shadow-lg transition-shadow">
+                この記事を読む &rsaquo;
+              </span>
             </div>
           </a>
         </section>
 
-        <!-- ▼ 編集部のおすすめ（2枚。サブ。薄めのトーン） -->
+        <!-- ▼ 編集部のおすすめ（2枚。サブ） -->
         <section class="mb-8">
+          <p class="text-[11px] font-bold text-text-muted uppercase tracking-wider mb-3">EDITOR'S PICK</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {sideFeaturePosts.map((post) => (
               <a href={`/posts/${post.id}/`} class="group relative rounded-xl overflow-hidden aspect-[16/9] shadow-md ring-1 ring-black/5">
@@ -106,21 +110,40 @@ const latestPosts = sortedPosts.slice(3);
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
                 <div class="absolute top-2.5 left-3">
-                  <span
-                    class="text-[10px] font-bold px-2 py-0.5 rounded"
-                    style={`color: white; background-color: ${getCategoryColor(post.data.category)}cc`}
-                  >
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded" style={`color: white; background-color: ${getCategoryColor(post.data.category)}cc`}>
                     {getCategoryName(post.data.category)}
                   </span>
                 </div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                   <h3 class="text-white text-[14px] font-bold leading-snug line-clamp-2">{post.data.title}</h3>
-                  <p class="text-white/40 text-[11px] mt-1.5">
-                    {post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
-                  </p>
+                  <p class="text-white/40 text-[11px] mt-1.5">{post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
                 </div>
               </a>
             ))}
+          </div>
+        </section>
+
+        <!-- ▼ 失敗談ゾーン（信頼+差別化） -->
+        <section class="mb-8 bg-amber-50 border border-amber-200 rounded-2xl p-5">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-lg">⚠️</span>
+            <h2 class="text-[15px] font-bold text-text">正直に書いた「やめておけ」の話</h2>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <a href="/posts/fx-kawase-kiken/" class="flex items-start gap-3 bg-white rounded-xl p-4 hover:shadow-sm transition-shadow group">
+              <span class="text-xl shrink-0">😰</span>
+              <div>
+                <p class="text-[13px] font-bold text-text group-hover:text-accent transition-colors leading-snug">FXは正直キツかった。リスクを計算して分かったこと</p>
+                <p class="text-[11px] text-text-muted mt-1">7割が負けている現実</p>
+              </div>
+            </a>
+            <a href="/posts/crypto-hajimete-risuku/" class="flex items-start gap-3 bg-white rounded-xl p-4 hover:shadow-sm transition-shadow group">
+              <span class="text-xl shrink-0">💸</span>
+              <div>
+                <p class="text-[13px] font-bold text-text group-hover:text-accent transition-colors leading-snug">仮想通貨で副業は危険？税金55%の現実</p>
+                <p class="text-[11px] text-text-muted mt-1">株より明らかに不利だった</p>
+              </div>
+            </a>
           </div>
         </section>
 
